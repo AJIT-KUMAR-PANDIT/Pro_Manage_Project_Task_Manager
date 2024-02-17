@@ -1,0 +1,68 @@
+.header {
+    display: flex;
+    width: 100%;
+
+    position: sticky;
+}
+
+.headerTitle {
+    font-family: Poppins;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 33px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    position: relative;
+    left: 257px;
+}
+
+.headerDate {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #707070;
+
+    position: fixed;
+    right: 21px;
+}
+
+.headerMenu {
+    position: fixed;
+    right: 21px;
+}
+
+
+.headerTitle2 {
+    position: relative;
+    left: 257px;
+}
+
+.dropdown {
+    width: 96px;
+    height: 24px;
+}
+
+.boardCards {
+    width: 81vw;
+    height: 87vh;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 21px;
+}
+
+.scroll{
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.boardCards_background {
+    border-radius: 10px;
+    width: 360px;
+    height: 796px;
+
+    background: #eef2f5;
+}

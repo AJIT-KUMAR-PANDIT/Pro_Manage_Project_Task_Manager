@@ -1,0 +1,133 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginTitle {
+    font-family: Open Sans;
+    font-size: 33px;
+    font-weight: 600;
+    line-height: 45px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.inputName,
+.inputEmail,
+.inputPassword {
+    border: 1.38px solid #d0d0d0;
+    border-radius: 11px;
+    width: 30vw;
+    height: 55px;
+
+    font-family: Open Sans;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.inputName::placeholder {
+    font-family: Open Sans;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    background-image: url('../../../Assets/name.svg');
+    background-repeat: no-repeat;
+    background-position: 10px;
+    background-size: contain;
+
+    position: relative;
+
+    padding: 0px 0px 0px 0px;
+}
+
+.inputEmail::placeholder {
+    font-family: Open Sans;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    background-image: url('../../../Assets/email.svg');
+    background-repeat: no-repeat;
+    background-position: 10px;
+    background-size: contain;
+
+    position: relative;
+
+    padding: 0px 0px 0px 0px;
+}
+
+.inputPassword::placeholder {
+    font-family: Open Sans;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    background-image: url('../../../Assets/password.svg');
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    background-size: contain;
+
+    position: relative;
+
+    padding: 0px 0px 0px 0px;
+}
+/* .inputPassword::placeholder {
+    font-family: Open Sans;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    background-image: url('../../../Assets/password.svg') , url('../../../Assets/passEye.svg');
+    background-repeat: no-repeat , no-repeat;
+    background-position: left 10px center, right 10px center;
+    background-size: contain, contain;
+
+    position: relative;
+
+    padding: 0px 0px 0px 0px;
+} */
+
+
+.loginButton {
+    border-radius: 55px;
+    padding: 0px 132px;
+    width: 30vw;
+    height: 55px;
+
+    background: #17a2b8;
+
+    color: #fff;
+
+    font-family: Open Sans;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: center;
+
+    border-color: #17a2b8;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}

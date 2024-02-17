@@ -1,0 +1,71 @@
+.dashboard {
+    display: flex;
+}
+
+.sideNavBar {
+    border-right: 1px solid #edf5fe;
+    width: 224px;
+    height: 100vh;
+
+    background: #fff;
+
+    position: fixed;
+    left: 0px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 21px;
+
+    font-family: Poppins;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.activeItem {
+    width: 211px;
+    height: 51px;
+
+    background: rgba(67, 145, 237, 0.1);
+
+    font-family: Poppins;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 21px;
+
+    padding: 3% 3% 3% 3%;
+}
+
+.inactiveItem {
+    font-family: Poppins;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #707070;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 21px;
+
+    padding: 3% 3% 3% 3%;
+}
