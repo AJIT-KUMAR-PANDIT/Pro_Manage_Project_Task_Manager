@@ -1,18 +1,20 @@
 .card {
     border-radius: 20px;
     width: 281px;
-    height: 368px;
+    height: auto;
 
     background: #fff;
 
     padding: 5% 5% 5% 5%;
+
+    flex-shrink: 0;
 }
 
 .priorityText {
     font-family: Poppins;
     font-size: 8px;
     font-weight: 500;
-    line-height: 12px;
+    line-height: 21px;
     letter-spacing: 0em;
     text-align: left;
 
@@ -24,7 +26,7 @@
 
 .cardTitle {
     font-family: Poppins;
-    font-size: 18px;
+    font-size: 21px;
     font-weight: 500;
     line-height: 27px;
     letter-spacing: 0em;
@@ -56,4 +58,28 @@
     background-repeat: no-repeat;
     background-size: cover;
     border-color: transparent;
+}
+
+.cardFooter {
+    display: flex;
+
+
+}
+
+.butFooter {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #767575;
+
+    border-radius: 8px;
+    padding: 5px 10px;
+    /* width: 62px;
+    height: 22px; */
+
+    background: #eeecec;
 }

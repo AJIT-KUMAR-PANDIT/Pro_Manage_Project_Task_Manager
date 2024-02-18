@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import StylesDashboard from './Dashboard.module.css';
 import Board from '../../Components/Dashboard/Board/Board';
+import Analytics from '../../Components/Dashboard/Analytics/Analytics';
+import Settings from '../../Components/Dashboard/Settings/Settings';
 
 const Dashboard = () => {
     const [activeItem, setActiveItem] = useState('Board');
@@ -9,9 +11,19 @@ const Dashboard = () => {
         setActiveItem(alt);
     };
 
+const toggleMenu = () => {
+    if (activeItem === 'Board') {
+       return <Board />;
+    } else if (activeItem === 'Analytics') {
+        return <Analytics />;
+    }else if (activeItem === 'Settings') {
+        return <Settings />;
+    }
+}
+
     return (
         <>
-            <div className={StylesDashboard.dashboard} style={{width: '100vw'}}>
+            <div className={StylesDashboard.dashboard} style={{width: '90vw'}}>
                 {/* ?side navBar start+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
                 <div className={StylesDashboard.sideNavBar} style={{position: 'fixed'}}>
                     <br/>
@@ -36,7 +48,7 @@ const Dashboard = () => {
                 </div>
                 {/* ?side navBar ends+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
                 <div>
-                    <Board />
+                {toggleMenu()}
                 </div>
             </div>
         </>

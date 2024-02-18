@@ -51,7 +51,7 @@ const Register = () => {
         e.preventDefault();
         setFormSubmitted(true);
 
-        // Add your registration logic here
+        // registration logic here
         console.log('Form submitted:', formData);
     };
 
