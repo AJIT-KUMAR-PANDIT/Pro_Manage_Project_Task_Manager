@@ -39,6 +39,14 @@
 .headerTitle2 {
     position: relative;
     left: 257px;
+
+    font-family: Poppins;
+    font-size: 29px;
+    font-weight: 500;
+    line-height: 44px;
+    letter-spacing: 0em;
+    text-align: left;
+
 }
 
 .dropdown {
@@ -48,13 +56,12 @@
 
 .boardCards {
     width: 81vw;
-    height: 87vh;
+    height: 85vh;
     display: flex;
-    flex-wrap: nowrap;
     gap: 21px;
 }
 
-.scroll{
+.scroll {
     overflow-y: scroll;
     overflow-x: scroll;
 }
@@ -62,7 +69,19 @@
 .boardCards_background {
     border-radius: 10px;
     width: 360px;
-    height: 796px;
+    height: 81vh;
 
     background: #eef2f5;
+
+
+    flex-shrink: 0;
+
+    overflow-y: scroll;
+
+    z-index: -1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }

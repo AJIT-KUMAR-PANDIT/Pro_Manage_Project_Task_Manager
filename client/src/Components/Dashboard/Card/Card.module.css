@@ -1,0 +1,59 @@
+.card {
+    border-radius: 20px;
+    width: 281px;
+    height: 368px;
+
+    background: #fff;
+
+    padding: 5% 5% 5% 5%;
+}
+
+.priorityText {
+    font-family: Poppins;
+    font-size: 8px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #707070;
+
+    position: relative;
+    top: center;
+}
+
+.cardTitle {
+    font-family: Poppins;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.checklist {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.hideBut {
+    /* background-color: transparent; */
+    background-image: url('../../../Assets/hideBut.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-color: transparent;
+}
+
+.showBut {
+    /* background-color: transparent; */
+    background-image: url('../../../Assets/showBut.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-color: transparent;
+}

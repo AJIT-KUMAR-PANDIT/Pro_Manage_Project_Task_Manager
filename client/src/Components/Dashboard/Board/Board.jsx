@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import StylesBoard from './Board.module.css';
+import Card from '../Card/Card';
 
 const Board = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -44,14 +45,16 @@ const Board = () => {
                         </div>
                     </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }} > 
-                <div style={{ width: '261px' }}></div>
-                <div className={`${StylesBoard.boardCards} ${StylesBoard.scroll}`}>
-                   <div className={StylesBoard.boardCards_background}>gh</div>
-                    <div className={StylesBoard.boardCards_background}></div>
-                    <div className={StylesBoard.boardCards_background}></div>
-                    <div className={StylesBoard.boardCards_background}></div>
-                </div>
+                <br />
+                <div>
+                    <div className={`${StylesBoard.boardCards} ${StylesBoard.scroll}`} style={{ position: 'relative', left: '261px' }}>
+                        <div className={StylesBoard.boardCards_background}>
+                            <Card />
+                        </div>
+                        <div className={StylesBoard.boardCards_background}></div>
+                        <div className={StylesBoard.boardCards_background}></div>
+                        <div className={StylesBoard.boardCards_background}></div>
+                    </div>
                 </div>
             </div>
         </>

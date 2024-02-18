@@ -11,9 +11,9 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className={StylesDashboard.dashboard}>
+            <div className={StylesDashboard.dashboard} style={{width: '100vw'}}>
                 {/* ?side navBar start+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
-                <div className={StylesDashboard.sideNavBar}>
+                <div className={StylesDashboard.sideNavBar} style={{position: 'fixed'}}>
                     <br/>
                     <div className={StylesDashboard.logo}>
                         <img src='Assets/logo.svg' alt='Pro Manage Logo' style={{ width: '21%' }} />Pro Manage
