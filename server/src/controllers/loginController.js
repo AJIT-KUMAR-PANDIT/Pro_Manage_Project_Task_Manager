@@ -1,4 +1,6 @@
 const Login = require('../models/login');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 // Controller to handle login
 exports.loginUser = async (req, res) => {
@@ -6,12 +8,23 @@ exports.loginUser = async (req, res) => {
         // Extract email and password from request body
         const { email, password } = req.body;
 
-        // Find the user with the provided email and password
-        const user = await Login.findOne({ email, password });
+        // Find the user with the provided email
+        const user = await Login.findOne({ email });
 
         if (user) {
-            // Respond with success message
-            res.status(200).json({ message: 'Login successful' });
+            // Compare the provided password with the hashed password in the database
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (isPasswordValid) {
+                // Generate JWT token
+                const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+                // Respond with success message and token
+                res.status(200).json({ message: 'Login successful', token });
+            } else {
+                // Respond with error message if password is invalid
+                res.status(401).json({ message: 'Invalid email or password' });
+            }
         } else {
             // Respond with error message if user not found
             res.status(404).json({ message: 'Invalid email or password' });
