@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import StylesAddModalElement from './AddModalElement.module.css'
 import ModalTaskList from '../ModalTaskList/ModalTaskList';
+import {useDispatch } from 'react-redux'
+import { closeModal1 } from '../../../Redux/slice'
 
 const AddModalElement = () => {
+
+
+    const dispatch = useDispatch();
+  const handleCloseModal = () => {
+    dispatch(closeModal1());
+  };
+  
+
+
     return (
         <>
             <div className={StylesAddModalElement.addModalElement}>
@@ -33,7 +44,7 @@ const AddModalElement = () => {
                         <button className={StylesAddModalElement.button1}>Select Due Date</button>
                     </div>
                     <div style={{ display: 'flex' , gap: '21px'}}>
-                        <button className={StylesAddModalElement.cancel}>Cancel</button>
+                        <button className={StylesAddModalElement.cancel} onClick={() => handleCloseModal()}>Cancel</button>
                         <button className={StylesAddModalElement.save}>Save</button>
                     </div>
                 </div>

@@ -1,30 +1,47 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  value: 0,
-}
+// Initial state for modal1
+const initialModalState = {
+  isOpen: false, // Assuming initial state for modal is open
+};
 
-export const globalSlice = createSlice({
-  name: 'global',
-  initialState,
+// Initial state for modal2
+const initialModal2State = {
+  isOpen: false, // Assuming initial state for modal2 is closed
+};
+
+// Slice for modal1
+export const modalSlice = createSlice({
+  name: 'modal',
+  initialState: initialModalState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1
+    closeModal: (state) => {
+      state.isOpen = false; // Setting isOpen to false when modal is closed
     },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    openModal: (state) => {
+      state.isOpen = true; // Setting isOpen to true when modal is opened
     },
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = globalSlice.actions
+export const { closeModal: closeModal1, openModal: openModal1 } = modalSlice.actions;
 
-export default globalSlice.reducer
+export const modalReducer = modalSlice.reducer;
+
+// Slice for modal2
+export const modal2Slice = createSlice({
+  name: 'modal2',
+  initialState: initialModal2State,
+  reducers: {
+    closeModal: (state) => {
+      state.isOpen = false; // Setting isOpen to false when modal is closed
+    },
+    openModal: (state) => {
+      state.isOpen = true; // Setting isOpen to true when modal is opened
+    },
+  },
+});
+
+export const { closeModal: closeModal2, openModal: openModal2 } = modal2Slice.actions;
+
+export const modal2Reducer = modal2Slice.reducer;

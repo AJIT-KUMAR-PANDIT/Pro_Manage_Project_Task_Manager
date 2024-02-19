@@ -4,6 +4,8 @@ import Card from '../Card/Card';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import AddModalElement from '../AddModalElement/AddModalElement';
+import { useSelector, useDispatch } from 'react-redux'
+import { closeModal1,openModal1 } from '../../../Redux/slice'
 
 const Board = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +21,12 @@ const Board = () => {
 
     // ?modal start
 
-    const [open, setOpen] = useState(false);
+    const isOpenModal = useSelector(state => state.modal.isOpen);
 
-    const onOpenModal = () => setOpen(true);
-    const onCloseModal = () => setOpen(false);
+    const dispatch = useDispatch();
+
+    const onOpenModal = () => dispatch(openModal1());
+    const onCloseModal = () =>   dispatch(closeModal1());;
 
     //modal end
 
@@ -91,7 +95,7 @@ const Board = () => {
 
 
             {/* ?modal start++++++++++++++++++++++++++++++++ */}
-            <Modal open={open} onClose={onCloseModal} center showCloseIcon={false}
+            <Modal open={isOpenModal} onClose={onCloseModal} center showCloseIcon={false}
                 classNames={{
                     modal: `${StylesBoard.customModal}`,
                 }}
