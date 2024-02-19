@@ -1,0 +1,27 @@
+.addModalElement {
+    border-radius: 22px;
+    width: 40vw;
+    height: 50vh;
+
+    background: #fff;
+}
+
+.title {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: left;
+
+}
+
+.asterisk {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    color: #FF0000;
+}

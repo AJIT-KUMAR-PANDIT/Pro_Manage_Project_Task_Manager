@@ -3,7 +3,7 @@ import StylesBoard from './Board.module.css';
 import Card from '../Card/Card';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-
+import AddModalElement from '../AddModalElement/AddModalElement';
 
 const Board = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -69,7 +69,7 @@ const Board = () => {
                         </div>
                         <div className={StylesBoard.boardCards_background}>
                             <br />
-                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>To do<img src='Assets/add.svg' alt='add' style={{ position: 'relative', right: '-211px' }} onClick={onOpenModal}/><img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
+                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>To do<img src='Assets/add.svg' alt='add' style={{ position: 'relative', right: '-211px' }} onClick={onOpenModal} /><img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
                             <br />
                             <Card />
                         </div>
@@ -91,8 +91,8 @@ const Board = () => {
 
 
             {/* ?modal start++++++++++++++++++++++++++++++++ */}
-            <Modal open={open} onClose={onCloseModal} center closeIcon={false}>
-                <h2>Simple centered modal</h2>
+            <Modal open={open} onClose={onCloseModal} center showCloseIcon={false}>
+                <AddModalElement />
             </Modal>
 
             {/* modal end+++++++++++++++++++++++++++++++++++ */}

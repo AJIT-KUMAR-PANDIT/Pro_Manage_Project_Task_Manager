@@ -25,7 +25,7 @@ const TaskList = () => {
         
           <input
             type="text"
-            placeholder="Type something..."
+            placeholder="Type..."
             value={inputValue}
             onChange={handleInputChange}
             className={StylesTaskList.inputTask}
