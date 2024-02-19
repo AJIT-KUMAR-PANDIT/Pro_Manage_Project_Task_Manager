@@ -2,47 +2,71 @@ import React, { useState } from 'react';
 import StylesModalTaskList from './ModalTaskList.module.css';
 
 const ModalTaskList = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
+  const [checklists, setChecklists] = useState([]);
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  const handleAddNewClick = () => {
+    const newChecklistId = `checklist-${checklists.length}`;
+    const newChecklist = {
+      id: newChecklistId,
+      inputValue: '',
+      isChecked: false,
+    };
+    setChecklists([...checklists, newChecklist]);
   };
 
-  const handleCheckboxChange = () => {
-    setIsChecked((prevChecked) => !prevChecked);
+  const handleInputChange = (e, id) => {
+    const updatedChecklists = checklists.map((checklist) => {
+      if (checklist.id === id) {
+        return { ...checklist, inputValue: e.target.value };
+      }
+      return checklist;
+    });
+    setChecklists(updatedChecklists);
+  };
+
+  const handleCheckboxChange = (id) => {
+    const updatedChecklists = checklists.map((checklist) => {
+      if (checklist.id === id) {
+        return { ...checklist, isChecked: !checklist.isChecked };
+      }
+      return checklist;
+    });
+    setChecklists(updatedChecklists);
+  };
+
+  const handleDeleteClick = (id) => {
+    const filteredChecklists = checklists.filter((checklist) => checklist.id !== id);
+    setChecklists(filteredChecklists);
   };
 
   return (
     <>
-      <div id='checklist'>
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-          className={StylesModalTaskList.checkbox}
-        />
-
-
-        <input
-          type="text"
-          placeholder="Type..."
-          value={inputValue}
-          onChange={handleInputChange}
-          className={StylesModalTaskList.inputTask}
-        />
-
-        <button className={StylesModalTaskList.deleteButton}>
-          <img src="Assets/delete.svg" alt="delete" />
-        </button>
-      </div>
-    <br/>
-      <div className={StylesModalTaskList.addButton}>
+      {checklists.map((checklist) => (
+        <div key={checklist.id} className={StylesModalTaskList.checklist}>
+          <input
+            type="checkbox"
+            checked={checklist.isChecked}
+            onChange={() => handleCheckboxChange(checklist.id)}
+            className={StylesModalTaskList.checkbox}
+          />
+          <input
+            type="text"
+            placeholder="Add a Task"
+            value={checklist.inputValue}
+            onChange={(e) => handleInputChange(e, checklist.id)}
+            className={StylesModalTaskList.inputTask}
+          />
+          <button className={StylesModalTaskList.deleteButton} onClick={() => handleDeleteClick(checklist.id)}>
+            <img src="Assets/delete.svg" alt="delete" />
+          </button>
+        </div>
+      ))}
+      <br/>
+      <div className={StylesModalTaskList.addButton} onClick={handleAddNewClick}>
         <img src='Assets/AddButton.svg' alt='AddButton' />&nbsp;&nbsp;Add New
       </div>
     </>
   );
 };
-
 
 export default ModalTaskList;

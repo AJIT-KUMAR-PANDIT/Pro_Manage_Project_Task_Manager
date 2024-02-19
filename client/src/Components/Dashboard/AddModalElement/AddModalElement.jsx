@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import StylesAddModalElement from './AddModalElement.module.css'
 import ModalTaskList from '../ModalTaskList/ModalTaskList';
 import {useDispatch } from 'react-redux'
@@ -6,12 +6,23 @@ import { closeModal1 } from '../../../Redux/slice'
 
 const AddModalElement = () => {
 
+    const [taskList, setTaskList] = useState([])
 
     const dispatch = useDispatch();
   const handleCloseModal = () => {
     dispatch(closeModal1());
   };
   
+
+  const handleAddTask = () => {
+    // Add a new task to the task list
+    setTaskList([...taskList, <ModalTaskList key={taskList.length} />]);
+};
+
+const handleDeleteTask = (index) => {
+    // Remove the task at the specified index from the task list
+    setTaskList(taskList.filter((_, i) => i !== index));
+};
 
 
     return (
