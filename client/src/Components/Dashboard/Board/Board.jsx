@@ -91,7 +91,11 @@ const Board = () => {
 
 
             {/* ?modal start++++++++++++++++++++++++++++++++ */}
-            <Modal open={open} onClose={onCloseModal} center showCloseIcon={false}>
+            <Modal open={open} onClose={onCloseModal} center showCloseIcon={false}
+                classNames={{
+                    modal: `${StylesBoard.customModal}`,
+                }}
+            >
                 <AddModalElement />
             </Modal>
 

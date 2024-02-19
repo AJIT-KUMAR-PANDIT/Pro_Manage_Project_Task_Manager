@@ -94,3 +94,11 @@
     letter-spacing: 0em;
     text-align: left;
 }
+
+.customModal{
+    border-radius: 22px;
+    /* width: 40vw;
+    height: 50vh; */
+
+    background: #fff;
+}

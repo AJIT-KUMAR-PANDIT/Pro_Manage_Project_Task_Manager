@@ -1,10 +1,10 @@
-.addModalElement {
+/* .addModalElement {
     border-radius: 22px;
     width: 40vw;
     height: 50vh;
 
     background: #fff;
-}
+} */
 
 .title {
     font-family: Inter;
@@ -24,4 +24,125 @@
     letter-spacing: 0.5px;
     text-align: left;
     color: #FF0000;
+}
+
+.inputTitle {
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+    padding: 10px 16px;
+    /* width: 588px; */
+    height: 44px;
+    background: #fff;
+
+    width: 93%;
+    font-size: 21px;
+}
+
+.inputTitle::placeholder {
+    font-family: Inter;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: left;
+
+    color: #9B959F;
+}
+
+.addPriority {
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    padding: 5px 10px;
+    width: 135px;
+    height: 31px;
+
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #767575;
+}
+
+.checklist {
+    overflow-y: scroll;
+    height: 223px;
+}
+
+/* .addButton {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #767575;
+} */
+
+.button1 {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+
+    color: #707070;
+
+
+    width: 185px;
+    height: 45px;
+
+    box-shadow: 0 2px 12px 0 rgba(130, 105, 140, 0.2);
+
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    width: 185px;
+    height: 45px;
+
+    background-color: transparent;
+}
+
+.cancel {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+
+    color: #CF3636;
+
+    width: 162px;
+    height: 45px;
+
+    box-shadow: 0 2px 12px 0 rgba(130, 105, 140, 0.2);
+
+    border: 1px solid #cf3636;
+    border-radius: 12px;
+    width: 162px;
+    height: 45px;
+
+    background-color: transparent;
+}
+
+.save {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+
+    color: #FFFFFF;
+
+    border-radius: 12px;
+    width: 162px;
+    height: 45px;
+
+    background: #17a2b8;
+    border-color: transparent;
 }
