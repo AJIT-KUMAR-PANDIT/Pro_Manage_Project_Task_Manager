@@ -16,8 +16,7 @@ const Board = () => {
     const baseUrl = Url();
 
     const [isOpen, setIsOpen] = useState(false);
-
-
+    const [selectedOption, setSelectedOption] = useState('thisWeek'); // Default selected option
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -35,21 +34,13 @@ const Board = () => {
     const dispatch = useDispatch();
 
     const onOpenModal = () => dispatch(openModal1());
-    const onCloseModal = () => dispatch(closeModal1());;
+    const onCloseModal = () => dispatch(closeModal1());
 
     //modal end
 
-
-
-
-
-
-
-
-
-    const fetchTasksToDo = async (userId) => {
+    const fetchTasksToDo = async (userId, boardDate) => {
         try {
-            const response = await axios.get(`${baseUrl}/api/gettasktodo`, { userId });
+            const response = await axios.post(`${baseUrl}/api/gettasktodo`, { userId, boardDate });
             return response.data.tasksToDo;
         } catch (error) {
             console.error('Error fetching tasks:', error);
@@ -57,17 +48,13 @@ const Board = () => {
         }
     };
 
-
-
-
-    const [tasksToDo, setTasksToDo] = useState({});
+    const [tasksToDo, setTasksToDo] = useState([]);
 
     useEffect(() => {
-
         const userId = localStorage.getItem('id');
         const fetchData = async () => {
             try {
-                const tasks = await fetchTasksToDo(userId);
+                const tasks = await fetchTasksToDo(userId, selectedOption);
                 setTasksToDo(tasks);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -75,11 +62,15 @@ const Board = () => {
         };
 
         fetchData();
-    }, [], [tasksToDo]);
+    }, [selectedOption],[]);
 
+    const handleSelectChange = (e) => {
+        setSelectedOption(e.target.value);
+    };
 
     return (
-        <>{console.log(tasksToDo,"uhuhuh")}
+        <>
+        {console.log("Board",tasksToDo)}
             <div>
                 <br />
                 <div className={StylesBoard.header} >
@@ -90,9 +81,9 @@ const Board = () => {
                     <div className={StylesBoard.headerTitle2}>Board</div>
                     <div className={StylesBoard.headerMenu}>
                         <div className={StylesBoard.dropdown}>
-                            <select className={StylesBoard.dropdown} onChange={(e) => handleItemClick(e.target.value)}>
+                            <select className={StylesBoard.dropdown} onChange={handleSelectChange} value={selectedOption}>
                                 <option value="thisWeek">This Week</option>
-                                <option value="today">Today </option>
+                                <option value="today">Today</option>
                                 <option value="thisMonth">This Month</option>
                             </select>
                         </div>
