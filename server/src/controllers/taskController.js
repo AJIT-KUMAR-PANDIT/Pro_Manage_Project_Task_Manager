@@ -5,8 +5,8 @@ const taskController = {
   // Method to add a new task
   addTask: async (req, res) => {
     try {
-      const { title, priority, checklist, dueDate } = req.body;
-      const newTask = new Task({ title, priority, checklist, dueDate });
+      const { title, priority, checklist, dueDate, board, userId } = req.body;
+      const newTask = new Task({ title, priority, checklist, dueDate, board, userId });
       await newTask.save();
       res.status(201).json({ message: 'Task added successfully', task: newTask });
     } catch (error) {

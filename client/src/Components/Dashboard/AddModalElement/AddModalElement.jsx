@@ -15,6 +15,9 @@ const AddModalElement = () => {
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(null);
 
+    const uId = localStorage.getItem('id');
+    const myBoard = 'done';
+
     const handleCloseModal = () => {
         dispatch(closeModal1());
     };
@@ -49,9 +52,10 @@ const AddModalElement = () => {
         const priority = selectedPriority; // Use the selected priority from state
         const checklist = taskList.map(task => ({ taskName: task.props.children }));
         const dueDate = startDate;
-        
+        const userId= uId;
+        const board = myBoard;
         // Make a POST request to the backend server
-        axios.post(`${baseUrl}/api/addtask`, { title, priority, checklist, dueDate })
+        axios.post(`${baseUrl}/api/addtask`, { title, priority, checklist, dueDate, board, userId})
             .then(response => {
                 console.log('Task added successfully:', response.data);
                 // Optionally, you can perform any additional actions after successful save
@@ -71,7 +75,6 @@ const AddModalElement = () => {
                 </div>
                 <br />
                 <div style={{ display: 'flex'}}>
-                    
                     <span>Select Priority<span className={StylesAddModalElement.asterisk}>*</span></span>
                     <div className={StylesAddModalElement.priorityOptions}>
                         <button value="HIGH PRIORITY" className={StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>

@@ -50,7 +50,7 @@ const Login = () => {
         console.log(response.data);
         toast.success(response.data.message);
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('id', response.data.userId);
+        localStorage.setItem('id', response.data.userId.toString());
         
             window.location.href = '/dashboard';
         

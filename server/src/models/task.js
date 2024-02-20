@@ -20,6 +20,15 @@ const taskSchema = new Schema({
     }],
     dueDate: {
         type: Date
+    },
+    board:{
+        type: String,
+        enum: ['toDo', 'inProgress','done','backlog'],
+        required: true
+    },
+    userId: {
+        type: String,
+        required: true
     }
 });
 
