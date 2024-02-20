@@ -13,7 +13,16 @@ const taskController = {
       res.status(500).json({ error: 'Error adding task' });
     }
   },
-
+// Method to get tasks with board value 'toDo' 
+getTaskToDo: async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const tasksToDo = await Task.find({ board: 'toDo', userId });
+    res.status(200).json({ tasksToDo });
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving tasks' });
+  }
+}
 };
 
 module.exports = taskController;

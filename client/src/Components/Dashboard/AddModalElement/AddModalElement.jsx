@@ -16,7 +16,7 @@ const AddModalElement = () => {
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(null);
     const uId = localStorage.getItem('id');
-    const myBoard = 'done';
+    const myBoard = 'toDo';
     const [checklists, setChecklists] = useState([]);
 
     

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StylesBoard from './Board.module.css';
 import Card from '../Card/Card';
 import 'react-responsive-modal/styles.css';
@@ -8,9 +8,16 @@ import { useSelector, useDispatch } from 'react-redux'
 import { closeModal1,openModal1 } from '../../../Redux/slice'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import {Url} from '../../../Utils/Url'
 
 const Board = () => {
+
+    const baseUrl = Url();
+
     const [isOpen, setIsOpen] = useState(false);
+
+    
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -31,6 +38,44 @@ const Board = () => {
     const onCloseModal = () =>   dispatch(closeModal1());;
 
     //modal end
+
+
+
+
+
+
+
+
+
+    const fetchTasksToDo = async (userId) => {
+        try {
+          const response = await axios.get(`${baseUrl}/api/gettasktodo`, { userId });
+          return response.data.tasksToDo;
+        } catch (error) {
+          console.error('Error fetching tasks:', error);
+          return [];
+        }
+      };
+
+
+
+
+      const [tasksToDo, setTasksToDo] = useState({});
+
+      useEffect(() => {
+
+        const userId = localStorage.getItem('id');
+        const fetchData = async () => {
+            try {
+                const tasks = await fetchTasksToDo(userId);
+                setTasksToDo(tasks);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        };
+
+        fetchData();
+    },[],[tasksToDo]);
 
 
     return (

@@ -8,6 +8,7 @@ const router = require("express").Router();
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/addtask', taskController.addTask);
+router.get('/gettasktodo', taskController.getTaskToDo);
 
 
 module.exports = router;
