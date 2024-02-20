@@ -1,21 +1,22 @@
 const Registration = require('../models/registration');
 const bcrypt = require('bcrypt');
-const { validationResult } = require('express-validator');
 
 // Controller to handle registration
-exports.registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
 
         // Extract data from request body
-        const { name, email, password } = req.body;
+        const { name, email, password, confirmPassword } = req.body;
+
+        if (!name || !email || !password || !confirmPassword) {
+            return res.status(400).json({
+                status: 400,
+                message: "All fields are required.",
+            });
+        }
 
         // Check if password meets minimum length requirement
-        if (password.length < 8) {
+        if (password.length < 8 && confirmPassword===password) {
             return res.status(400).json({ message: 'Password must be at least 8 characters long' });
         }
 
@@ -51,3 +52,6 @@ function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
+
+
+module.exports = registerUser;

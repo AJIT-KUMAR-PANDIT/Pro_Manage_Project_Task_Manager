@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 const cors = require('cors');
 
@@ -18,6 +19,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const routes = require('./src/routes/routes');
 
 // health Api
 app.get('/', (req, res) => {
@@ -26,6 +28,12 @@ app.get('/', (req, res) => {
         status: 200
     });
 });
+
+
+
+app.use('/api', routes);
+
+
 
 //server on port 5000
 app.listen(port,()=>{

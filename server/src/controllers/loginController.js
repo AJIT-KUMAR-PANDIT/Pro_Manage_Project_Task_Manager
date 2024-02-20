@@ -1,9 +1,9 @@
-const Login = require('../models/login');
+const Login = require('../models/registration');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 // Controller to handle login
-exports.loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
     try {
         // Extract email and password from request body
         const { email, password } = req.body;
@@ -34,3 +34,5 @@ exports.loginUser = async (req, res) => {
         res.status(500).json({ message: 'Login failed', error: error.message });
     }
 };
+
+module.exports = loginUser;
