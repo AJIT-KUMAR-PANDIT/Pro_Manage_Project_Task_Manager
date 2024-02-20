@@ -7,64 +7,91 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import { Url } from '../../../Utils/Url';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddModalElement = () => {
     const baseUrl = Url();
-    const [taskList, setTaskList] = useState([]);
-    const [selectedPriority, setSelectedPriority] = useState(null); // State to store selected priority
+    const [selectedPriority, setSelectedPriority] = useState(null);
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(null);
-
     const uId = localStorage.getItem('id');
     const myBoard = 'done';
+    const [checklists, setChecklists] = useState([]);
 
+    
     const handleCloseModal = () => {
         dispatch(closeModal1());
     };
 
-    const handleAddTask = () => {
-        // Add a new task to the task list
-        setTaskList([...taskList, <ModalTaskList key={taskList.length} />]);
-    };
-
-    const handleDeleteTask = (index) => {
-        // Remove the task at the specified index from the task list
-        setTaskList(taskList.filter((_, i) => i !== index));
-    };
-
     const handlePriorityClick = (priority) => {
-        // Set the selected priority when a button is clicked
         setSelectedPriority(priority);
     };
 
+    const handleTaskCheck = (taskId, completed) => {
+        // Handle task checkbox click
+        console.log('Task checkbox clicked - Task ID:', taskId, 'Completed:', completed);
+    };
+
+    const handleTaskDelete = (taskId) => {
+        // Handle task delete button click
+        console.log('Task delete button clicked - Task ID:', taskId);
+    };
+
+    const handleSave = () => {
+        const title = document.getElementById('taskTitle').value;
+        const priority = selectedPriority;
+        const dueDate = startDate ? startDate.toISOString().split('T')[0] : null; // Format date as "YYYY-MM-DD"
+        const userId = uId;
+        const board = myBoard;
+    
+        // Filter out empty tasks from the checklist
+        const nonEmptyChecklist = checklists.filter(item => item.inputValue.trim() !== '');
+    
+        // Check if there are any non-empty tasks
+        if (nonEmptyChecklist.length === 0) {
+            console.log('No tasks to save.');
+            toast.error('No tasks to save.');
+            return; // Don't proceed if there are no tasks to save
+        }
+    
+        const checklist = nonEmptyChecklist.map(item => ({
+            taskName: item.inputValue,
+            completed: item.isChecked
+        }));
+    
+        const data = {
+            title,
+            priority,
+            checklist,
+            dueDate,
+            userId,
+            board
+        };
+    
+        console.log(data);
+    
+        axios.post(`${baseUrl}/api/addtask`, data)
+            .then(response => {
+                console.log('Task added successfully:', response.data);
+                toast.success(response.data.message);
+                handleCloseModal();
+            })
+            .catch(error => {
+                console.error('Error adding task:', error);
+                toast.error(error);
+            });
+    };
+    
     const DateInput = forwardRef(({ value, onClick }, ref) => (
         <button
             className={StylesAddModalElement.button1}
             onClick={onClick}
             ref={ref}
         >
-            {value || "Select Due Date"} {/* Display placeholder if value is empty */}
+            {value || "Select Due Date"}
         </button>
     ));
-
-    const handleSave = () => {
-        const title = document.getElementById('taskTitle').value;
-        const priority = selectedPriority; // Use the selected priority from state
-        const checklist = taskList.map(task => ({ taskName: task.props.children }));
-        const dueDate = startDate;
-        const userId= uId;
-        const board = myBoard;
-        // Make a POST request to the backend server
-        axios.post(`${baseUrl}/api/addtask`, { title, priority, checklist, dueDate, board, userId})
-            .then(response => {
-                console.log('Task added successfully:', response.data);
-                // Optionally, you can perform any additional actions after successful save
-            })
-            .catch(error => {
-                console.error('Error adding task:', error);
-                // Handle error
-            });
-    };
 
     return (
         <>
@@ -87,7 +114,7 @@ const AddModalElement = () => {
                     <span>Checklist (1/3)<span className={StylesAddModalElement.asterisk}>*</span></span>
                 </div>
                 <div className={StylesAddModalElement.checklist}>
-                    <ModalTaskList />
+                    <ModalTaskList checklists={checklists} setChecklists={setChecklists} onTaskCheck={handleTaskCheck} onTaskDelete={handleTaskDelete} />
                 </div>
                 <br />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -105,6 +132,7 @@ const AddModalElement = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </>
     );
 };

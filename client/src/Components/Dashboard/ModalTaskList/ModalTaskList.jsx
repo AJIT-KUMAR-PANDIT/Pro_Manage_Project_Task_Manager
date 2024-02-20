@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import StylesModalTaskList from './ModalTaskList.module.css';
 
-const ModalTaskList = () => {
-  const [checklists, setChecklists] = useState([]);
+const ModalTaskList = ({ checklists, setChecklists, onTaskCheck, onTaskDelete }) => {
 
   const handleAddNewClick = () => {
     const newChecklistId = `checklist-${checklists.length}`;
@@ -32,11 +31,20 @@ const ModalTaskList = () => {
       return checklist;
     });
     setChecklists(updatedChecklists);
+    // Pass the updated data to the parent component
+    onTaskCheck(id, updatedChecklists.find(checklist => checklist.id === id).isChecked);
   };
 
   const handleDeleteClick = (id) => {
     const filteredChecklists = checklists.filter((checklist) => checklist.id !== id);
     setChecklists(filteredChecklists);
+    // Pass the updated data to the parent component
+    onTaskDelete(id);
+  };
+
+  // Function to collect task data as string arrays
+  const collectTaskData = () => {
+    return checklists.map(checklist => checklist.inputValue);
   };
 
   return (

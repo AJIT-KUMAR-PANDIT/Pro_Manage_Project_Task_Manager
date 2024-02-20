@@ -6,7 +6,7 @@ const initialModalState = {
 };
 
 // Initial state for modal2
-const initialModal2State = {
+const initialToast = {
   isOpen: false, // Assuming initial state for modal2 is closed
 };
 
@@ -29,9 +29,9 @@ export const { closeModal: closeModal1, openModal: openModal1 } = modalSlice.act
 export const modalReducer = modalSlice.reducer;
 
 // Slice for modal2
-export const modal2Slice = createSlice({
+export const boardToast = createSlice({
   name: 'modal2',
-  initialState: initialModal2State,
+  initialState: initialToast,
   reducers: {
     closeModal: (state) => {
       state.isOpen = false; // Setting isOpen to false when modal is closed
@@ -42,6 +42,6 @@ export const modal2Slice = createSlice({
   },
 });
 
-export const { closeModal: closeModal2, openModal: openModal2 } = modal2Slice.actions;
+export const { closeModal: closeModal2, openModal: openModal2 } = boardToast.actions;
 
-export const modal2Reducer = modal2Slice.reducer;
+export const modal2Reducer = boardToast.reducer;

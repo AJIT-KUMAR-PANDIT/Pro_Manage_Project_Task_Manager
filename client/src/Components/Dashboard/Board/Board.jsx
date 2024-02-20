@@ -6,6 +6,8 @@ import { Modal } from 'react-responsive-modal';
 import AddModalElement from '../AddModalElement/AddModalElement';
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal1,openModal1 } from '../../../Redux/slice'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Board = () => {
     const [isOpen, setIsOpen] = useState(false);
