@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import StylesRegister from './Register.module.css';
 import passEye from '../../../Assets/passEye.svg';
+import { Url } from '../../../Utils/Url';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
+
+    const baseUrl = Url();
+
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -47,15 +55,69 @@ const Register = () => {
         setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormSubmitted(true);
 
-        // registration logic here
-        console.log('Form submitted:', formData);
+        // Validate all fields before submitting
+        if (validateFormData()) {
+            // registration logic here
+
+
+            try {
+                const response = await axios.post(`${baseUrl}/api/register`, formData);
+                console.log(response.data);
+                toast.success(response.data.message);
+              } catch (error) {
+                console.error(error.response.data);
+                toast.error(error.response.data.message);
+              }
+
+
+
+
+            
+            console.log('Form submitted:', formData);
+        }
+    };
+
+    // Function to validate all form data fields
+    const validateFormData = () => {
+        let isValid = true;
+        const newErrors = {};
+
+        // Check name field
+        if (formData.name.trim() === '') {
+            newErrors.name = 'Name is required';
+            isValid = false;
+        }
+
+        // Check email field
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = 'Invalid email address';
+            isValid = false;
+        }
+
+        // Check password field
+        if (formData.password.length < 8) {
+            newErrors.password = 'Password must be at least 8 characters long';
+            isValid = false;
+        }
+
+        // Check confirmPassword field
+        if (formData.confirmPassword !== formData.password) {
+            newErrors.confirmPassword = 'Passwords do not match';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
     };
 
     return (
+        <>
+        
+        
         <div className={StylesRegister.register}>
             <h2 className={StylesRegister.registerTitle}>Register</h2>
             <form onSubmit={handleSubmit}>
@@ -69,7 +131,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                 </div>
-                
+
                 {formSubmitted && <span className={StylesRegister.error}>{errors.name}</span>}
                 <br />
                 <div>
@@ -100,9 +162,9 @@ const Register = () => {
                         onClick={handleTogglePassword}
                         style={{ position: 'relative', left: '-40px' }}
                     />
-                    
+
                 </div>
-                    {formSubmitted && <span className={StylesRegister.error}>{errors.password}</span>}
+                {formSubmitted && <span className={StylesRegister.error}>{errors.password}</span>}
                 <br />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', flexWrap: 'nowrap' }}>
                     <input
@@ -127,8 +189,12 @@ const Register = () => {
                     Register
                 </button>
             </form>
-            
+
         </div>
+
+<ToastContainer />
+
+        </>
     );
 };
 
