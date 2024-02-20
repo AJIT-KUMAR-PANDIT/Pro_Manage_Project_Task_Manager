@@ -53,7 +53,7 @@
     border: 1px solid #e2e2e2;
     border-radius: 8px;
     padding: 5px 10px;
-    width: 135px;
+    /* width: 135px; */
     height: 31px;
 
     font-family: Poppins;
@@ -64,6 +64,10 @@
     text-align: left;
 
     color: #767575;
+
+    background-color: transparent;
+
+    
 }
 
 .checklist {
