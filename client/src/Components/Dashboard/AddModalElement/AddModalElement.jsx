@@ -1,28 +1,50 @@
-import React,{useState} from 'react';
+import React, { useState, forwardRef } from 'react';
 import StylesAddModalElement from './AddModalElement.module.css'
 import ModalTaskList from '../ModalTaskList/ModalTaskList';
-import {useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { closeModal1 } from '../../../Redux/slice'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddModalElement = () => {
 
     const [taskList, setTaskList] = useState([])
 
     const dispatch = useDispatch();
-  const handleCloseModal = () => {
-    dispatch(closeModal1());
-  };
+    const handleCloseModal = () => {
+        dispatch(closeModal1());
+    };
+
+
+    const handleAddTask = () => {
+        // Add a new task to the task list
+        setTaskList([...taskList, <ModalTaskList key={taskList.length} />]);
+    };
+
+    const handleDeleteTask = (index) => {
+        // Remove the task at the specified index from the task list
+        setTaskList(taskList.filter((_, i) => i !== index));
+    };
+
+
+
+    // due datepicker start
+
+    
+    const [startDate, setStartDate] = useState(null);
+
+    const DateInput = forwardRef(({ value, onClick }, ref) => (
+      <button
+      className={StylesAddModalElement.button1}
+        onClick={onClick}
+        ref={ref}
+      >
+        {value || "Select Due Date"} {/* Display placeholder if value is empty */}
+      </button>
+    ));
   
 
-  const handleAddTask = () => {
-    // Add a new task to the task list
-    setTaskList([...taskList, <ModalTaskList key={taskList.length} />]);
-};
-
-const handleDeleteTask = (index) => {
-    // Remove the task at the specified index from the task list
-    setTaskList(taskList.filter((_, i) => i !== index));
-};
+    // due datepicker end
 
 
     return (
@@ -49,12 +71,18 @@ const handleDeleteTask = (index) => {
                 <div className={StylesAddModalElement.checklist}>
                     <ModalTaskList />
                 </div>
-                <br/>
+                <br />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div>
-                        <button className={StylesAddModalElement.button1}>Select Due Date</button>
+                    <div style={{ display: 'flex', alignContent: 'center',alignItems: 'center' }}>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            customInput={<DateInput />}
+                            placeholderText='Select Due Date'
+                        />
+                        {console.log(startDate)}
                     </div>
-                    <div style={{ display: 'flex' , gap: '21px'}}>
+                    <div style={{ display: 'flex', gap: '21px' }}>
                         <button className={StylesAddModalElement.cancel} onClick={() => handleCloseModal()}>Cancel</button>
                         <button className={StylesAddModalElement.save}>Save</button>
                     </div>
