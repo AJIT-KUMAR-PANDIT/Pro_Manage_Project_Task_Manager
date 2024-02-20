@@ -5,11 +5,11 @@ import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import AddModalElement from '../AddModalElement/AddModalElement';
 import { useSelector, useDispatch } from 'react-redux'
-import { closeModal1,openModal1 } from '../../../Redux/slice'
+import { closeModal1, openModal1 } from '../../../Redux/slice'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import {Url} from '../../../Utils/Url'
+import { Url } from '../../../Utils/Url'
 
 const Board = () => {
 
@@ -17,7 +17,7 @@ const Board = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    
+
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -35,7 +35,7 @@ const Board = () => {
     const dispatch = useDispatch();
 
     const onOpenModal = () => dispatch(openModal1());
-    const onCloseModal = () =>   dispatch(closeModal1());;
+    const onCloseModal = () => dispatch(closeModal1());;
 
     //modal end
 
@@ -49,20 +49,20 @@ const Board = () => {
 
     const fetchTasksToDo = async (userId) => {
         try {
-          const response = await axios.get(`${baseUrl}/api/gettasktodo`, { userId });
-          return response.data.tasksToDo;
+            const response = await axios.get(`${baseUrl}/api/gettasktodo`, { userId });
+            return response.data.tasksToDo;
         } catch (error) {
-          console.error('Error fetching tasks:', error);
-          return [];
+            console.error('Error fetching tasks:', error);
+            return [];
         }
-      };
+    };
 
 
 
 
-      const [tasksToDo, setTasksToDo] = useState({});
+    const [tasksToDo, setTasksToDo] = useState({});
 
-      useEffect(() => {
+    useEffect(() => {
 
         const userId = localStorage.getItem('id');
         const fetchData = async () => {
@@ -75,11 +75,11 @@ const Board = () => {
         };
 
         fetchData();
-    },[],[tasksToDo]);
+    }, [], [tasksToDo]);
 
 
     return (
-        <>
+        <>{console.log(tasksToDo,"uhuhuh")}
             <div>
                 <br />
                 <div className={StylesBoard.header} >
@@ -90,22 +90,11 @@ const Board = () => {
                     <div className={StylesBoard.headerTitle2}>Board</div>
                     <div className={StylesBoard.headerMenu}>
                         <div className={StylesBoard.dropdown}>
-                            <button className="dropdown-toggle" onClick={toggleMenu}>
-                                Today
-                            </button>
-                            {isOpen && (
-                                <div className="dropdown-menu" onClick={toggleMenu}>
-                                    <button className="dropdown-item" onClick={() => handleItemClick('Item 1')}>
-                                        Item 1
-                                    </button>
-                                    <button className="dropdown-item" onClick={() => handleItemClick('Item 2')}>
-                                        Item 2
-                                    </button>
-                                    <button className="dropdown-item" onClick={() => handleItemClick('Item 3')}>
-                                        Item 3
-                                    </button>
-                                </div>
-                            )}
+                            <select className={StylesBoard.dropdown} onChange={(e) => handleItemClick(e.target.value)}>
+                                <option value="thisWeek">This Week</option>
+                                <option value="today">Today </option>
+                                <option value="thisMonth">This Month</option>
+                            </select>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,73 @@
+.logo {
+    font-family: Poppins;
+    font-size: 31px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+
+
+    padding-top: 31px;
+    padding-left: 31px;
+    width: 96vw;
+}
+
+.public {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.cards {
+    border: 2px solid #edf5fe;
+    border-radius: 12px;
+    padding: 62px 33px;
+    width: 50vw;
+    height: 60vh;
+
+    background: #fff;
+}
+
+.priorityText {
+    font-family: Poppins;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+
+
+    color: #707070;
+}
+
+.cardTitle {
+    font-family: Poppins;
+    font-size: 29px;
+    font-weight: 900;
+    line-height: 33px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.checklist {
+    font-family: Inter;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+
+.taskList{
+    overflow-y: scroll;
+    height: 300px;
+}

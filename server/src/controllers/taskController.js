@@ -16,8 +16,14 @@ const taskController = {
 // Method to get tasks with board value 'toDo' 
 getTaskToDo: async (req, res) => {
   try {
-    const { userId } = req.body;
-    const tasksToDo = await Task.find({ board: 'toDo', userId });
+    const { userId, boardDate } = req.body;
+
+    boardDate=== today // show today tasks add todays date to boardDate
+    if boardDate=== thisweek // show this week tasks add this week date to boardDate
+    if boardDate=== thismonth // show this month tasks add this month date to boardDate
+
+
+    const tasksToDo = await Task.find({ board: 'toDo', userId ,});
     res.status(200).json({ tasksToDo });
   } catch (error) {
     res.status(500).json({ error: 'Error retrieving tasks' });
