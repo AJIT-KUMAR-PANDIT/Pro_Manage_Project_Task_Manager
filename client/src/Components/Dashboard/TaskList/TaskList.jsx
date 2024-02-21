@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import StylesTaskList from './TaskList.module.css';
 
-const TaskList = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
+const TaskList = ({taskName, completed}) => {
+    const [inputValue, setInputValue] = useState(taskName);
+    const [isChecked, setIsChecked] = useState(completed);
   
-    const handleInputChange = (e) => {
-      setInputValue(e.target.value);
-    };
-  
-    const handleCheckboxChange = () => {
-      setIsChecked((prevChecked) => !prevChecked);
-    };
-  
+      
     return (
       <div>
           <input
             type="checkbox"
             checked={isChecked}
-            onChange={handleCheckboxChange}
             className={StylesTaskList.checkbox}
           />
           
@@ -27,7 +19,6 @@ const TaskList = () => {
             type="text"
             placeholder="Type..."
             value={inputValue}
-            onChange={handleInputChange}
             className={StylesTaskList.inputTask}
           />
         

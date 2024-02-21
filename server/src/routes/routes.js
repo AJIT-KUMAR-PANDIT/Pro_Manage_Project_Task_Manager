@@ -9,6 +9,7 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/addtask', taskController.addTask);
 router.post('/gettasktodo', taskController.getTaskToDo);
+router.post('/updateboard', taskController.updateBoard);
 
 
 module.exports = router;
