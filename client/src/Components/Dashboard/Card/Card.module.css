@@ -86,7 +86,7 @@
     background: #eeecec;
 }
 
-.butFooterDate{
+.butFooterDate {
     font-family: Poppins;
     font-size: 12px;
     font-weight: 500;
@@ -102,4 +102,42 @@
     height: 22px; */
 
     background: #eeecec;
+}
+
+.butFooterDatePassed {
+    background: #cf3636;
+
+    border-radius: 8px;
+    padding: 5px 10px;
+    /* width: 53px;
+    height: 22px; */
+
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #FFFFFF;
+}
+
+
+.butFooterDateGreen{
+
+    border-radius: 8px;
+    padding: 5px 10px;
+    /* width: 53px;
+    height: 22px; */
+
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #FFFFFF;
+
+    background: #63c05b;
 }

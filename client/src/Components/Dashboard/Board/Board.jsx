@@ -65,13 +65,13 @@ const Board = () => {
         };
 
         fetchData();
-    }, [selectedOption,isBoardChanged],[]);
+    }, [selectedOption, isBoardChanged], []);
 
     const handleSelectChange = (e) => {
         setSelectedOption(e.target.value);
     };
 
-const myName = localStorage.getItem('name')
+    const myName = localStorage.getItem('name')
 
 
 
@@ -79,52 +79,46 @@ const myName = localStorage.getItem('name')
 
 
 
-// ?? todays date  start
-const [formattedDate, setFormattedDate] = useState('');
+    // ?? todays date  start
+    const [formattedDate, setFormattedDate] = useState('');
 
-useEffect(() => {
-  const today = new Date();
-  const formatted = `${getFormattedDay(today)} ${getFormattedMonth(today)}, ${today.getFullYear()}`;
-  setFormattedDate(formatted);
-}, []);
+    useEffect(() => {
+        const today = new Date();
+        const formatted = `${getFormattedDay(today)} ${getFormattedMonth(today)}, ${today.getFullYear()}`;
+        setFormattedDate(formatted);
+    }, []);
 
-function getFormattedDay(date) {
-  const day = date.getDate();
-  if (day >= 11 && day <= 13) {
-    return `${day}th`;
-  }
-  switch (day % 10) {
-    case 1:
-      return `${day}st`;
-    case 2:
-      return `${day}nd`;
-    case 3:
-      return `${day}rd`;
-    default:
-      return `${day}th`;
-  }
-}
+    function getFormattedDay(date) {
+        const day = date.getDate();
+        if (day >= 11 && day <= 13) {
+            return `${day}th`;
+        }
+        switch (day % 10) {
+            case 1:
+                return `${day}st`;
+            case 2:
+                return `${day}nd`;
+            case 3:
+                return `${day}rd`;
+            default:
+                return `${day}th`;
+        }
+    }
 
-function getFormattedMonth(date) {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return months[date.getMonth()];
-}
-
-// today date ends
+    function getFormattedMonth(date) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return months[date.getMonth()];
+    }
 
 
-
-
-
-
-
-
+    // today date ends
 
 
     return (
         <>
             {console.log("Board", tasksToDo)}
             {console.log("isBoardChanged", isBoardChanged)}
+
             <div>
                 <br />
                 <div className={StylesBoard.header} >
@@ -151,7 +145,7 @@ function getFormattedMonth(date) {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Backlog<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "backlog") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
+                                return ((taskBoard.board === "backlog") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} /></>);
                             })}
 
                         </div>
@@ -160,7 +154,7 @@ function getFormattedMonth(date) {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>To do<img src='Assets/add.svg' alt='add' style={{ position: 'relative', right: '-211px' }} onClick={onOpenModal} /><img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "toDo") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
+                                return ((taskBoard.board === "toDo") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} /></>);
                             })}
                         </div>
                         <div className={StylesBoard.boardCards_background}>
@@ -168,7 +162,7 @@ function getFormattedMonth(date) {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-100px' }}>In progress<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-200px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "inProgress") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
+                                return ((taskBoard.board === "inProgress") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} /></>);
                             })}
                         </div>
                         <div className={StylesBoard.boardCards_background}>
@@ -176,7 +170,7 @@ function getFormattedMonth(date) {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Done<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "done") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
+                                return ((taskBoard.board === "done") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} /></>);
                             })}
                         </div>
                     </div>
