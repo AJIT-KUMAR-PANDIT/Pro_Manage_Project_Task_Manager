@@ -62,7 +62,7 @@ const Board = () => {
         };
 
         fetchData();
-    }, [selectedOption], []);
+    }, [selectedOption], [],[200]);
 
     const handleSelectChange = (e) => {
         setSelectedOption(e.target.value);

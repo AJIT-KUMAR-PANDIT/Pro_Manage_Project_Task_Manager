@@ -6,7 +6,7 @@ const initialModalState = {
 };
 
 // Initial state for modal2
-const initialToast = {
+const initialBoardSwitch = {
   isOpen: false, // Assuming initial state for modal2 is closed
 };
 
@@ -29,19 +29,19 @@ export const { closeModal: closeModal1, openModal: openModal1 } = modalSlice.act
 export const modalReducer = modalSlice.reducer;
 
 // Slice for modal2
-export const boardToast = createSlice({
-  name: 'modal2',
-  initialState: initialToast,
+export const boardSwitch = createSlice({
+  name: 'boardSwitch',
+  initialState: initialBoardSwitch,
   reducers: {
-    closeModal: (state) => {
+    boardSwitchNo: (state) => {
       state.isOpen = false; // Setting isOpen to false when modal is closed
     },
-    openModal: (state) => {
+    boardSwitchYes: (state) => {
       state.isOpen = true; // Setting isOpen to true when modal is opened
     },
   },
 });
 
-export const { closeModal: closeModal2, openModal: openModal2 } = boardToast.actions;
+export const { boardSwitchNo, boardSwitchYes} = boardSwitch.actions;
 
-export const modal2Reducer = boardToast.reducer;
+export const boardSwitchReducer = boardSwitch.reducer;

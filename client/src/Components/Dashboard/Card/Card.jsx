@@ -39,44 +39,54 @@ const Card = ({ priority, title, checklist, myTaskId }) => {
         }
     };
 
-    const handleChange = () => {
-        switch (changeBoard) {
-            case 'backlog':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
-                    </>
-                );
-            case 'inProgress':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
-                    </>
-                );
-            case 'toDo':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
-                    </>
-                );
-            case 'done':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
-                    </>
-                );
-            default:
-                return null;
+    useEffect(() => {
+        toggleBoard();
+    },[changeBoard]);
+
+    const handleChange = (changeBoard) => { 
+        if (changeBoard === "backlog") {
+            return (
+                <>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
+                </>
+            );
         }
+        
+        if (changeBoard === "inProgress") {
+            return (
+                <>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
+                </>
+            );
+        }
+        
+        if (changeBoard === "toDo") {
+            return (
+                <>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
+                </>
+            );
+        }
+        
+        if (changeBoard === "done") {
+            return (
+                <>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
+                    <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
+                </>
+            );
+        }
+        
+        return null;
     };
+    
 
     return (
         <>
@@ -107,7 +117,7 @@ const Card = ({ priority, title, checklist, myTaskId }) => {
                 <div className={StylesCard.cardFooter}>
                     <div className={StylesCard.butFooterDate}>Feb 10</div>
                     <div className={StylesCard.cardFooter} style={{ position: 'relative', right: '-21px', display: 'flex', gap: '1px' }}>
-                        {handleChange()}
+                        {handleChange(changeBoard)}
                     </div>
                 </div>
             </div>
