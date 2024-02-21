@@ -5,7 +5,7 @@ import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import AddModalElement from '../AddModalElement/AddModalElement';
 import { useSelector, useDispatch } from 'react-redux'
-import { closeModal1, openModal1 } from '../../../Redux/slice'
+import { closeModal1, openModal1, boardSwitchYes, boardSwitchNo } from '../../../Redux/slice'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -30,6 +30,9 @@ const Board = () => {
     // ?modal start
 
     const isOpenModal = useSelector(state => state.modal.isOpen);
+
+    const isBoardChanged = useSelector(state => state.boardSwitch.isBoardSwitch);
+
 
     const dispatch = useDispatch();
 
@@ -62,11 +65,57 @@ const Board = () => {
         };
 
         fetchData();
-    }, [selectedOption], [],[200]);
+    }, [selectedOption,isBoardChanged],[]);
 
     const handleSelectChange = (e) => {
         setSelectedOption(e.target.value);
     };
+
+const myName = localStorage.getItem('name')
+
+
+
+
+
+
+
+// ?? todays date  start
+const [formattedDate, setFormattedDate] = useState('');
+
+useEffect(() => {
+  const today = new Date();
+  const formatted = `${getFormattedDay(today)} ${getFormattedMonth(today)}, ${today.getFullYear()}`;
+  setFormattedDate(formatted);
+}, []);
+
+function getFormattedDay(date) {
+  const day = date.getDate();
+  if (day >= 11 && day <= 13) {
+    return `${day}th`;
+  }
+  switch (day % 10) {
+    case 1:
+      return `${day}st`;
+    case 2:
+      return `${day}nd`;
+    case 3:
+      return `${day}rd`;
+    default:
+      return `${day}th`;
+  }
+}
+
+function getFormattedMonth(date) {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return months[date.getMonth()];
+}
+
+// today date ends
+
+
+
+
+
 
 
 
@@ -75,11 +124,12 @@ const Board = () => {
     return (
         <>
             {console.log("Board", tasksToDo)}
+            {console.log("isBoardChanged", isBoardChanged)}
             <div>
                 <br />
                 <div className={StylesBoard.header} >
-                    <div className={StylesBoard.headerTitle}>Welcome! Kumar</div>
-                    <div className={StylesBoard.headerDate}>12th Jan, 2024</div>
+                    <div className={StylesBoard.headerTitle}>Welcome! {myName}</div>
+                    <div className={StylesBoard.headerDate}>{formattedDate}</div>
                 </div>
                 <div className={StylesBoard.header}>
                     <div className={StylesBoard.headerTitle2}>Board</div>

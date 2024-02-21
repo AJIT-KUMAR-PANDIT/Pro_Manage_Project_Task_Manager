@@ -20,7 +20,7 @@ const loginUser = async (req, res) => {
                 const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
                 // Respond with success message and token
-                res.status(200).json({ message: 'Login successful', token ,userId: user._id.toString() });
+                res.status(200).json({ message: 'Login successful', token ,userId: user._id.toString(),name: user.name });
             } else {
                 // Respond with error message if password is invalid
                 res.status(401).json({ message: 'Invalid email or password' });

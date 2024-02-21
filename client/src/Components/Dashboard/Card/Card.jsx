@@ -3,6 +3,8 @@ import axios from 'axios'; // Import Axios library
 import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
+import { useDispatch } from 'react-redux';
+import {toggleBoardSwitch} from '../../../Redux/slice'
 
 const Card = ({ priority, title, checklist, myTaskId }) => {
 
@@ -14,6 +16,10 @@ const Card = ({ priority, title, checklist, myTaskId }) => {
         setIsVisible(prevState => !prevState);
     };
     let imgSrc;
+
+    const dispatch = useDispatch();
+
+
     const img = () => {
         switch (priority) {
             case 'HIGH PRIORITY':
@@ -41,6 +47,7 @@ const Card = ({ priority, title, checklist, myTaskId }) => {
 
     useEffect(() => {
         toggleBoard();
+        dispatch(toggleBoardSwitch());
     },[changeBoard]);
 
     const handleChange = (changeBoard) => { 
