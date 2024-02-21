@@ -41,7 +41,7 @@ const taskController = {
       }
 
       // Fetch tasks based on userId and boardDate
-      const tasksToDo = await Task.find({ board: 'toDo', userId, createdDate: { $gte: startDate, $lte: endDate } });
+      const tasksToDo = await Task.find({  userId, createdDate: { $gte: startDate, $lte: endDate } });
       res.status(200).json({ tasksToDo });
     } catch (error) {
       res.status(500).json({ error: 'Error retrieving tasks' });
@@ -51,12 +51,13 @@ const taskController = {
   updateBoard: async (req, res) => {
     try {
       const { taskId, newBoard } = req.body;
-      const updatedTask = await Task.findByIdAndUpdate({_id: taskId}, { board: newBoard }, { new: true });
+      const updatedTask = await Task.findByIdAndUpdate(taskId, { board: newBoard }, { new: true });
       res.status(200).json({ message: 'Board updated successfully', task: updatedTask });
     } catch (error) {
       res.status(500).json({ error: 'Error updating board' });
     }
   }
+  
 };
 
 module.exports = taskController;

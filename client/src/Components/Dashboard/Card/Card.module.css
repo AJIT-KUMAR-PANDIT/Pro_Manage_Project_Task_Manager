@@ -8,6 +8,8 @@
     padding: 5% 5% 5% 5%;
 
     flex-shrink: 0;
+
+    word-wrap: break-word;
 }
 
 .priorityText {
@@ -67,6 +69,24 @@
 }
 
 .butFooter {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #767575;
+
+    border-radius: 8px;
+    padding: 5px 10px;
+    /* width: 62px;
+    height: 22px; */
+
+    background: #eeecec;
+}
+
+.butFooterDate{
     font-family: Poppins;
     font-size: 12px;
     font-weight: 500;

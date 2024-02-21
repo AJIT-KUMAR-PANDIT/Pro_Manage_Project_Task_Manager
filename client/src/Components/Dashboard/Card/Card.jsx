@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Import Axios library
 import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
+import { Url } from '../../../Utils/Url';
 
-const Card = ({ priority, title, checklist }) => {
+const Card = ({ priority, title, checklist, myTaskId }) => {
+
+    const baseUrl = Url();
     const [isVisible, setIsVisible] = useState(false);
-    const [changeBoard, setChangeBoard] = useState("TODO")
-
+    const [changeBoard, setChangeBoard] = useState("toDo");
 
     const toggleVisibility = () => {
         setIsVisible(prevState => !prevState);
     };
     let imgSrc;
     const img = () => {
-
         switch (priority) {
             case 'HIGH PRIORITY':
                 imgSrc = 'Assets/high.svg';
@@ -23,53 +25,58 @@ const Card = ({ priority, title, checklist }) => {
             default:
                 imgSrc = 'Assets/low.svg';
         }
-    }
+    };
 
-    const toggelBoard = (e) => {
-        setChangeBoard(e);
-    }
-
-
-    const handleChange = () => {
-        switch (changeBoard) {
-            case 'BACKLOG':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("INPROGRESS")} value='INPROGRESS'>PROGRESS</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("TODO")} value='TODO'>TO DO</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("DONE")} value='DONE'>DONE</div>
-                    </>
-                );
-            case 'INPROGRESS':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("BACKLOG")} value='BACKLOG'>BACKLOG</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("TODO")} value='TODO'>TO DO</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("DONE")} value='DONE'>DONE</div>
-                    </>
-                );
-            case 'TODO':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("BACKLOG")} value='BACKLOG'>BACKLOG</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("INPROGRESS")} value='INPROGRESS'>PROGRESS</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("DONE")} value='DONE'>DONE</div>
-                    </>
-                );
-            case 'DONE':
-                return (
-                    <>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("BACKLOG")} value='BACKLOG'>BACKLOG</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("INPROGRESS")} value='INPROGRESS'>PROGRESS</div>
-                        <div className={StylesCard.butFooter} onClick={() => toggelBoard("TODO")} value='TODO'>TO DO</div>
-                    </>
-                );
+    const toggleBoard = async (newBoard) => {
+        try {
+            const taskId = myTaskId; 
+            const response = await axios.post(`${baseUrl}/api/updateboard`, { taskId, newBoard });
+            
+            setChangeBoard(response.data.task.board);
+            console.log(response.data.task.board); 
+        } catch (error) {
+            console.error('Error updating board:', error);
         }
     };
 
-    useEffect(() => {
-        handleChange();
-    }, [], [toggelBoard], [handleChange])
+    const handleChange = () => {
+        switch (changeBoard) {
+            case 'backlog':
+                return (
+                    <>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
+                    </>
+                );
+            case 'inProgress':
+                return (
+                    <>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
+                    </>
+                );
+            case 'toDo':
+                return (
+                    <>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("done")} value='done'>DONE</div>
+                    </>
+                );
+            case 'done':
+                return (
+                    <>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("backlog")} value='backlog'>BACKLOG</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("inProgress")} value='inProgress'>PROGRESS</div>
+                        <div className={StylesCard.butFooter} onClick={() => toggleBoard("toDo")} value='toDo'>TO DO</div>
+                    </>
+                );
+            default:
+                return null;
+        }
+    };
 
     return (
         <>
@@ -87,7 +94,6 @@ const Card = ({ priority, title, checklist }) => {
                     </button>
                 </div>
 
-
                 {checklist && isVisible && (
                     <div>
                         <br />
@@ -99,9 +105,8 @@ const Card = ({ priority, title, checklist }) => {
 
                 <br />
                 <div className={StylesCard.cardFooter}>
-                    <div className={StylesCard.butFooter}>Feb 10</div>
+                    <div className={StylesCard.butFooterDate}>Feb 10</div>
                     <div className={StylesCard.cardFooter} style={{ position: 'relative', right: '-21px', display: 'flex', gap: '1px' }}>
-
                         {handleChange()}
                     </div>
                 </div>

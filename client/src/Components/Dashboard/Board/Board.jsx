@@ -101,7 +101,7 @@ const Board = () => {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Backlog<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "Backlog") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklists={taskBoard.checklists}/></>);
+                                return ((taskBoard.board === "backlog") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
                             })}
 
                         </div>
@@ -110,7 +110,7 @@ const Board = () => {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>To do<img src='Assets/add.svg' alt='add' style={{ position: 'relative', right: '-211px' }} onClick={onOpenModal} /><img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "toDo") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist}/></>);
+                                return ((taskBoard.board === "toDo") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
                             })}
                         </div>
                         <div className={StylesBoard.boardCards_background}>
@@ -118,7 +118,7 @@ const Board = () => {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-100px' }}>In progress<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-200px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "inProgress") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklists={taskBoard.checklists}/></>);
+                                return ((taskBoard.board === "inProgress") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
                             })}
                         </div>
                         <div className={StylesBoard.boardCards_background}>
@@ -126,7 +126,7 @@ const Board = () => {
                             <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Done<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
-                                return ((taskBoard.board === "done") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklists={taskBoard.checklists}/></>);
+                                return ((taskBoard.board === "done") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id}/></>);
                             })}
                         </div>
                     </div>
