@@ -173,19 +173,39 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
     const [showOverlay, setShowOverlay] = useState(false);
 
     const toggleOverlay = () => {
-      setShowOverlay(!showOverlay);
+        setShowOverlay(!showOverlay);
     };
 
 
     const deleteTask = async (taskId) => {
         try {
-          const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`);
-          return response.data;
+            const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`);
+            return response.data;
         } catch (error) {
-          throw new Error(error.response.data.error || 'Error deleting task');
+            throw new Error(error.response.data.error || 'Error deleting task');
         }
-      };
+    };
 
+    const [shareableLink, setShareableLink] = useState('');
+    const [showLink, setShowLink] = useState(false);
+    const [copied, setCopied] = useState(false);
+
+    const generateShareableLink = async (taskId) => {
+        try {
+            const response = await axios.get(`${baseUrl}/api/sharelink/${taskId}`);
+            setShareableLink(response.data.shareableLink);
+            setShowLink(true);
+
+            navigator.clipboard.writeText(response.data.shareableLink);
+            setCopied(true);
+
+            setTimeout(() => {
+                setCopied(false);
+            }, 5000); // Reset copied status after 5 seconds
+        } catch (error) {
+            console.error('Error generating shareable link:', error);
+        }
+    };
 
     return (
         <>
@@ -199,9 +219,9 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                             <img src='Assets/3dot.svg' alt='3dot' style={{ position: 'absolute', right: '11px', paddingTop: '11px', paddingBottom: '15px', paddingLeft: '15px', paddingRight: '7px' }} onClick={toggleOverlay} />
                         </span>
                         {showOverlay && (
-                            <div className={StylesCard.dropDown} style={{ display:'flex', flexDirection:'column',gap:'11px'}}>
+                            <div className={StylesCard.dropDown} style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
                                 <div className={StylesCard.dropDownBut}>Edit</div>
-                                <div className={StylesCard.dropDownBut}>Share</div>
+                                <div className={StylesCard.dropDownBut} onClick={() => generateShareableLink(myTaskId)}>Share</div>
                                 <div className={StylesCard.dropDownButDel} onClick={() => deleteTask(myTaskId)}>Delete</div>
                             </div>
                         )}

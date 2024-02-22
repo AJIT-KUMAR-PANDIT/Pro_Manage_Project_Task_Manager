@@ -11,8 +11,7 @@ import NotFound from '../../Components/Dashboard/NotFound/NotFound';
 
 const Public = ({ taskId }) => {
     const baseUrl = Url();
-    const [shareableLink, setShareableLink] = useState('');
-    const [showLink, setShowLink] = useState(false);
+    
     const [publicTaskData, setPublicTaskData] = useState(0);
     let imgSrc = null;
 
@@ -32,15 +31,7 @@ const Public = ({ taskId }) => {
         showPublicTaskData(taskId);
     }, [], [taskId]);
 
-    const generateShareableLink = async (taskId) => {
-        try {
-            const response = await axios.get(`${baseUrl}/api/sharelink/${taskId}`);
-            setShareableLink(response.data.shareableLink);
-            setShowLink(true);
-        } catch (error) {
-            console.error('Error generating shareable link:', error);
-        }
-    };
+    
 
     const setImage = (priority) => {
         switch (priority) {
@@ -63,6 +54,33 @@ const Public = ({ taskId }) => {
     const [check, setCheck] = useState(null);
 
     
+var totalChecks = 0;
+
+    const funTotalChecks = () => {
+        publicTaskData.checklist &&
+        publicTaskData.checklist.map((taskList, key) => (
+            totalChecks++
+        ));
+        return totalChecks;
+    };
+
+    var checksMarked = 0;
+
+    const funTotalChecksMarked = () => {
+        publicTaskData.checklist &&
+        publicTaskData.checklist.map((taskList, key) => {
+            if (taskList.completed) {
+                checksMarked++;
+            }
+        });
+        return checksMarked;
+    };
+
+    useEffect(() => {
+        funTotalChecksMarked();
+    }, [], [taskId]);
+
+
     return (
         <>
             {console.log(publicTaskData)}
@@ -82,7 +100,11 @@ const Public = ({ taskId }) => {
                         </div>
                         <br /><br />
                         <div className={StylePublic.checklist}>
-                            Checklist (1/3)
+                            Checklist ({
+                                funTotalChecksMarked()
+                            }/{
+                                funTotalChecks()
+                            })
                         </div>
                         <br />
                         <div className={StylePublic.taskList}>
@@ -94,13 +116,13 @@ const Public = ({ taskId }) => {
                             {console.log(publicTaskData.checklist)}
                         </div>
                         <br />
-                        <button onClick={() => generateShareableLink(taskId)}>Generate Shareable Link</button>
+                        {/* <button onClick={() => generateShareableLink(taskId)}>Generate Shareable Link</button>
                         {showLink && (
                             <div className={StylePublic.shareableLink}>
                                 <p>Shareable Link:</p>
                                 <a href={shareableLink} target="_blank" rel="noopener noreferrer">{shareableLink}</a>
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
 
