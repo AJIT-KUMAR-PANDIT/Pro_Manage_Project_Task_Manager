@@ -6,7 +6,7 @@ import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
 import { toggleBoardSwitch } from '../../../Redux/slice'
 
-const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate }) => {
+const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
 
     const baseUrl = Url();
     const [isVisible, setIsVisible] = useState(false);
@@ -184,6 +184,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate }) => {
     return (
         <>
             {img(priority)}
+            {console.log("collasped========",collasped)}
             <div className={StylesCard.card}>
                 <div className={StylesCard.priorityText}>
                     <img src={imgSrc} alt='high' />&nbsp;&nbsp;{priority}
@@ -201,7 +202,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate }) => {
                     </button>
                 </div>
 
-                {checklist && isVisible && (
+                {((checklist && isVisible )||( collasped===true))&& (
                     <div>
                         <br />
                         {checklist.map((taskList, index) => (
