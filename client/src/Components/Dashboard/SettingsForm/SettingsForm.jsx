@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import StyleSettingsForm from './SettingsForm.module.css';
 import passEye from '../../../Assets/passEye.svg';
+import {Url} from '../../../Utils/Url';
 
 const SettingsForm = () => {
+
+    const baseUrl = Url();
+
     const [formData, setFormData] = useState({
+        _id:localStorage.getItem('id'),
         name: '',
         password: '',
         confirmPassword: '',
@@ -26,8 +32,7 @@ const SettingsForm = () => {
         let errorMessage = '';
         if (name === 'name') {
             errorMessage = value.trim() === '' ? 'Name is required' : '';
-        } 
-         else if (name === 'password') {
+        } else if (name === 'password') {
             errorMessage = value.length < 8 ? 'Password must be at least 8 characters long' : '';
         } else if (name === 'confirmPassword') {
             errorMessage = value !== formData.password ? 'Passwords do not match' : '';
@@ -44,12 +49,18 @@ const SettingsForm = () => {
         setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormSubmitted(true);
 
-        // change password/username logic here
-        console.log('Form submitted:', formData);
+        try {
+            const response = await axios.post(`${baseUrl}/api/updatesettings`, formData);
+            console.log(response.data);
+            // Handle success, maybe show a success message or redirect
+        } catch (error) {
+            console.error('Error updating settings:', error.response.data);
+            // Handle error, maybe show an error message to the user
+        }
     };
 
     return (

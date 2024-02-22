@@ -77,6 +77,7 @@ const Login = () => {
                         value={formData.email}
                         onChange={handleChange}
                     />
+                    <br/>
                     {formSubmitted && <span className={StylesLogin.error}>{errors.email}</span>}
                 </div>
                 <br />

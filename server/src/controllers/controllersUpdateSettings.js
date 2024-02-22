@@ -20,40 +20,45 @@ const settingsUpdate = async (req, res) => {
             // Hash the password before updating
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Update with hashed password
+            // Update with hashed password and only if name is not empty
+            const updateFields = { password: hashedPassword };
+            if (name.trim() !== '') {
+                updateFields.name = name;
+            }
+
             const result = await updateSettings.findOneAndUpdate({ _id }, {
-                $set: {
-                    name,
-                    password: hashedPassword
-                }
+                $set: updateFields
             }, {
                 new: true
             });
 
             if (!result) {
-                return res.status(404).json({ error: "No document found matching the _id." });
+                return res.status(404).json({ error: "Not Updated" });
             }
 
-            return res.status(200).json({ message: "Document updated successfully.", updatedDocument: result });
+            return res.status(200).json({ message: "Updated successfully.", updatedDocument: result });
         } else {
-            // If password is not provided, update only the name
+            // If password is not provided, update only the name if not empty
+            const updateFields = {};
+            if (name.trim() !== '') {
+                updateFields.name = name;
+            }
+
             const result = await updateSettings.findOneAndUpdate({ _id }, {
-                $set: {
-                    name
-                }
+                $set: updateFields
             }, {
                 new: true
             });
 
             if (!result) {
-                return res.status(404).json({ error: "No document found matching the _id." });
+                return res.status(404).json({ error: "Not Updated" });
             }
 
-            return res.status(200).json({ message: "Document updated successfully.", updatedDocument: result });
+            return res.status(200).json({ message: "Updated successfully.", updatedDocument: result });
         }
     } catch (error) {
-        console.error("Error updating document:", error);
-        return res.status(500).json({ error: "An error occurred while updating the document." });
+        console.error("Error updating :", error);
+        return res.status(500).json({ error: "An error occurred while updating." });
     }
 };
 
