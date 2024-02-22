@@ -204,7 +204,7 @@ useEffect(()=>{
                     </button>
                 </div>
 
-                {((checklist && isVisible )||( collasped===true))&& (
+                {((checklist && isVisible )||(collasped===true))&& (
                     <div>
                         <br />
                         {checklist.map((taskList, index) => (
