@@ -4,7 +4,8 @@ import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
-import { toggleBoardSwitch } from '../../../Redux/slice'
+import { toggleBoardSwitch } from '../../../Redux/slice';
+import Modal from 'react-responsive-modal';
 
 const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
 
@@ -94,12 +95,6 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         return null;
     };
 
-
-
-
-
-    // ?start due date
-
     const [dueDate, setDueDate] = useState('');
     const [newDueDate, setNewDueDate] = useState('');
     const [dueDatePassed, setDueDatePassed] = useState(null);
@@ -119,7 +114,6 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
 
         setNewDueDate(getFormattedDate(serverDueDate));
 
-        // Compare serverDueDate with today's date
         if (serverDueDate < today) {
             setDueDatePassed(true);
         } else {
@@ -152,45 +146,55 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         }
     }
 
-    // end duedate
-
     var totalChecks = 0;
 
     const funTotalChecks = (checklist) => {
-
         checklist.map((taskList, key) => (
             totalChecks++
-        ))
+        ));
         return totalChecks;
-    }
+    };
 
     var checksMarked = 0;
 
     const funTotalChecksMarked = (checklist) => {
-
         checklist.map((taskList, key) => {
             if (taskList.completed) {
                 checksMarked++;
             }
-        })
+        });
         return checksMarked;
-    }
+    };
 
-useEffect(()=>{
-    funTotalChecksMarked(checklist);
-},[],[myTaskId,checklist])
+    useEffect(() => {
+        funTotalChecksMarked(checklist);
+    }, [], [myTaskId, checklist]);
 
+    const [showOverlay, setShowOverlay] = useState(false);
 
-
+    const toggleOverlay = () => {
+      setShowOverlay(!showOverlay);
+    };
 
     return (
         <>
             {img(priority)}
-            {console.log("collasped========",collasped)}
+            {console.log("collasped========", collasped)}
             <div className={StylesCard.card}>
-                <div className={StylesCard.priorityText}>
-                    <img src={imgSrc} alt='high' />&nbsp;&nbsp;{priority}
-                    <img src='Assets/3dot.svg' alt='3dot' style={{ position: 'absolute', right: '11px' }} />
+                <div className={StylesCard.priorityText} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div><img src={imgSrc} alt='high' />&nbsp;&nbsp;{priority}</div>
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <span>
+                            <img src='Assets/3dot.svg' alt='3dot' style={{ position: 'absolute', right: '11px', paddingTop: '11px', paddingBottom: '15px', paddingLeft: '15px', paddingRight: '7px' }} onClick={toggleOverlay} />
+                        </span>
+                        {showOverlay && (
+                            <div className={StylesCard.dropDown} style={{ display:'flex', flexDirection:'column',gap:'11px'}}>
+                                <div className={StylesCard.dropDownBut}>Edit</div>
+                                <div className={StylesCard.dropDownBut}>Share</div>
+                                <div className={StylesCard.dropDownButDel}>Delete</div>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <br />
                 <div className={StylesCard.cardTitle}>{title}</div>
@@ -204,7 +208,7 @@ useEffect(()=>{
                     </button>
                 </div>
 
-                {((checklist && isVisible )||(collasped===true))&& (
+                {((checklist && isVisible) || (collasped === true)) && (
                     <div>
                         <br />
                         {checklist.map((taskList, index) => (
@@ -226,8 +230,12 @@ useEffect(()=>{
                     </div>
                 </div>
             </div>
+            {showOverlay && (
+                <div className={StylesCard.overlay} onClick={toggleOverlay}></div>
+            )}
         </>
     );
 };
 
 export default Card;
+

@@ -56,6 +56,7 @@ const SettingsForm = () => {
         try {
             const response = await axios.post(`${baseUrl}/api/updatesettings`, formData);
             console.log(response.data);
+            localStorage.setItem('name', formData.name);
             // Handle success, maybe show a success message or redirect
         } catch (error) {
             console.error('Error updating settings:', error.response.data);

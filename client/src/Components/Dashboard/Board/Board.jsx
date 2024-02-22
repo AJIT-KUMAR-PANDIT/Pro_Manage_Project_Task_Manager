@@ -150,7 +150,7 @@ const Board = () => {
                     <div className={`${StylesBoard.boardCards} ${StylesBoard.scroll}`} style={{ position: 'relative', left: '261px' }}>
                         <div className={StylesBoard.boardCards_background}>
                             <br />
-                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Backlog<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} onClick={() => setCollasped({ ...collasped, backlog: !collasped.backlog })} /></div>
+                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Backlog<img src='Assets/collaspe.svg' alt='collaspe' style={{ position: 'relative', right: '-231px' }} onClick={() => setCollasped({ ...collasped, backlog: !collasped.backlog })} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
                                 return ((taskBoard.board === "backlog") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} collasped={collasped.backlog} /></>);
@@ -159,7 +159,7 @@ const Board = () => {
                         </div>
                         <div className={StylesBoard.boardCards_background}>
                             <br />
-                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>To do<img src='Assets/add.svg' alt='add' style={{ position: 'relative', right: '-211px' }} onClick={onOpenModal} /><img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} onClick={() => setCollasped({ ...collasped, todo: !collasped.todo })} /></div>
+                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>To do<img src='Assets/add.svg' alt='add' style={{ position: 'relative', right: '-211px' }} onClick={onOpenModal} /><img src='Assets/collaspe.svg' alt='collaspe' style={{ position: 'relative', right: '-231px' }} onClick={() => setCollasped({ ...collasped, todo: !collasped.todo })} /></div>
 
                             {tasksToDo.map((taskBoard, index) => {
                                 return ((taskBoard.board === "toDo") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} collasped={collasped.todo} /></>);
@@ -167,7 +167,7 @@ const Board = () => {
                         </div>
                         <div className={StylesBoard.boardCards_background}>
                             <br />
-                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-100px' }}>In progress<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-200px' }} onClick={() => setCollasped({ ...collasped, inprogress: !collasped.inprogress })}/></div>
+                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-100px' }}>In progress<img src='Assets/collaspe.svg' alt='collaspe' style={{ position: 'relative', right: '-200px' }} onClick={() => setCollasped({ ...collasped, inprogress: !collasped.inprogress })}/></div>
 
                             {tasksToDo.map((taskBoard, index) => {
                                 return ((taskBoard.board === "inProgress") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} collasped={collasped.inprogress} /></>);
@@ -175,7 +175,7 @@ const Board = () => {
                         </div>
                         <div className={StylesBoard.boardCards_background}>
                             <br />
-                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Done<img src='Assets/collaspe.svg' alt='3dot' style={{ position: 'relative', right: '-231px' }} onClick={() => setCollasped({ ...collasped, done: !collasped.done })}/></div>
+                            <div className={StylesBoard.boardCards_backgroundTitle} style={{ position: 'relative', left: '-111px' }}>Done<img src='Assets/collaspe.svg' alt='collaspe' style={{ position: 'relative', right: '-231px' }} onClick={() => setCollasped({ ...collasped, done: !collasped.done })}/></div>
 
                             {tasksToDo.map((taskBoard, index) => {
                                 return ((taskBoard.board === "done") && <><br /> <Card key={index} priority={taskBoard.priority} title={taskBoard.title} checklist={taskBoard.checklist} myTaskId={taskBoard._id} serverFetchedDate={taskBoard.dueDate} collasped={collasped.done} /></>);
