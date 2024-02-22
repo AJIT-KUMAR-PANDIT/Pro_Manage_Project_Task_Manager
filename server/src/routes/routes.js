@@ -1,6 +1,8 @@
 const registerUser = require("../controllers/registrationController");
 const loginUser = require("../controllers/loginController");
 const taskController = require("../controllers/taskController");
+const { analytics } = require("../controllers/analyticsController");
+const updateSettings = require("../controllers/controllersUpdateSettings");
 
 const router = require("express").Router();
 
@@ -10,6 +12,18 @@ router.post('/login', loginUser);
 router.post('/addtask', taskController.addTask);
 router.post('/gettasktodo', taskController.getTaskToDo);
 router.post('/updateboard', taskController.updateBoard);
+router.post('/updatesettings', updateSettings);
 
+
+// Route to fetch analytics data for a specific user
+router.get('/analytics/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const userData = await analytics(userId);
+        res.status(200).json(userData);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching analytics data' });
+    }
+});
 
 module.exports = router;
