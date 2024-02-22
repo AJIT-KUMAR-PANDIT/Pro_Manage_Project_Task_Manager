@@ -176,7 +176,9 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         return checksMarked;
     }
 
-
+useEffect(()=>{
+    funTotalChecksMarked(checklist);
+},[],[myTaskId,checklist])
 
 
 
@@ -206,7 +208,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                     <div>
                         <br />
                         {checklist.map((taskList, index) => (
-                            <TaskList key={index} taskName={taskList.taskName} completed={taskList.completed} />
+                            <TaskList key={index} taskName={taskList.taskName} completed={taskList.completed} taskListId={myTaskId} checkListId={taskList._id} />
                         ))}
                     </div>
                 )}

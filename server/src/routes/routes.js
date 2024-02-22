@@ -13,7 +13,7 @@ router.post('/addtask', taskController.addTask);
 router.post('/gettasktodo', taskController.getTaskToDo);
 router.post('/updateboard', taskController.updateBoard);
 router.post('/updatesettings', updateSettings);
-
+router.post('/updatechecklist', taskController.updateChecklist);
 
 // Route to fetch analytics data for a specific user
 router.get('/analytics/:userId', async (req, res) => {

@@ -41,7 +41,7 @@ const taskController = {
       }
 
       // Fetch tasks based on userId and boardDate
-      const tasksToDo = await Task.find({  userId, createdDate: { $gte: startDate, $lte: endDate } });
+      const tasksToDo = await Task.find({ userId, createdDate: { $gte: startDate, $lte: endDate } });
       res.status(200).json({ tasksToDo });
     } catch (error) {
       res.status(500).json({ error: 'Error retrieving tasks' });
@@ -56,8 +56,36 @@ const taskController = {
     } catch (error) {
       res.status(500).json({ error: 'Error updating board' });
     }
+  },
+
+  updateChecklist: async (req, res) => {
+    try {
+      const { taskId, checklistItemId, completed } = req.body;
+      const task = await Task.findById(taskId);
+      if (!task) {
+        return res.status(404).json({ error: 'Task not found' });
+      }
+
+      const checklistItem = task.checklist.id(checklistItemId);
+      if (!checklistItem) {
+        return res.status(404).json({ error: 'Checklist item not found' });
+      }
+
+      // Check if the new completed value is different from the current one
+      if ((checklistItem.completed !== completed) && (typeof completed === 'boolean')) {
+        // Update the completion status of the checklist item
+        checklistItem.completed = completed;
+        await task.save();
+      }
+
+      res.status(200).json({ message: 'Checklist item updated successfully', task });
+    } catch (error) {
+      res.status(500).json({ error: 'Error updating checklist item' });
+    }
   }
-  
+
+
+
 };
 
 module.exports = taskController;
