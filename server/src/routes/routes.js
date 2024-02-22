@@ -15,6 +15,7 @@ router.post('/updateboard', taskController.updateBoard);
 router.post('/updatesettings', updateSettings);
 router.post('/updatechecklist', taskController.updateChecklist);
 router.delete('/deletetask/:taskId', taskController.deleteTask);
+router.get('/publictasks/:taskId', taskController.showPublicTasks);
 
 // Route to fetch analytics data for a specific user
 router.get('/analytics/:userId', async (req, res) => {
@@ -26,5 +27,19 @@ router.get('/analytics/:userId', async (req, res) => {
         res.status(500).json({ error: 'Error fetching analytics data' });
     }
 });
+
+
+router.get('/sharelink/:taskId', async (req, res) => {
+    try {
+      const { taskId } = req.params;
+      const shareableLink = await taskController.generateLink(taskId);
+      
+      res.status(200).json({ shareableLink });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error generating shareable link' });
+    }
+});
+
 
 module.exports = router;

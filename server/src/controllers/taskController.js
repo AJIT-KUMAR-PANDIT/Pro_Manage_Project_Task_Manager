@@ -1,5 +1,5 @@
 // taskController.js
-const Task = require('../models/task'); // Assuming your model file is named 'task.js'
+const Task = require('../models/task'); 
 
 const taskController = {
   // Method to add a new task
@@ -96,7 +96,37 @@ deleteTask: async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error deleting task' });
   }
-}
+},
+
+generateLink: async (taskId) => {
+
+  const Url = 'http://localhost:3000';
+
+  try {
+    const task = await Task.findById({_id:taskId});
+
+    if (!task) {
+      throw new Error('Task not found');
+    }
+ 
+    const shareableLink = `${Url}/public/sharedtasklink/${task._id}`;
+    
+    return shareableLink;
+  } catch (error) {
+    throw new Error('Error generating shareable link');
+  }
+},
+
+showPublicTasks: async (req, res) => {
+  try {
+    const { taskId } = req.params;
+    const tasks = await Task.find({ _id: taskId }); 
+    res.status(200).json({ tasks });
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching public tasks' });
+  }
+},
+
 
 };
 
