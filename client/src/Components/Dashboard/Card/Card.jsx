@@ -176,6 +176,17 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
       setShowOverlay(!showOverlay);
     };
 
+
+    const deleteTask = async (taskId) => {
+        try {
+          const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`);
+          return response.data;
+        } catch (error) {
+          throw new Error(error.response.data.error || 'Error deleting task');
+        }
+      };
+
+
     return (
         <>
             {img(priority)}
@@ -191,7 +202,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                             <div className={StylesCard.dropDown} style={{ display:'flex', flexDirection:'column',gap:'11px'}}>
                                 <div className={StylesCard.dropDownBut}>Edit</div>
                                 <div className={StylesCard.dropDownBut}>Share</div>
-                                <div className={StylesCard.dropDownButDel}>Delete</div>
+                                <div className={StylesCard.dropDownButDel} onClick={() => deleteTask(myTaskId)}>Delete</div>
                             </div>
                         )}
                     </div>

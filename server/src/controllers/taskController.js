@@ -82,9 +82,21 @@ const taskController = {
     } catch (error) {
       res.status(500).json({ error: 'Error updating checklist item' });
     }
+  },
+
+// Method to delete a task
+deleteTask: async (req, res) => {
+  try {
+    const { taskId } = req.params;
+    const deletedTask = await Task.findByIdAndDelete({_id: taskId});
+    if (!deletedTask) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    res.status(200).json({ message: 'Task deleted successfully', task: deletedTask });
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting task' });
   }
-
-
+}
 
 };
 
