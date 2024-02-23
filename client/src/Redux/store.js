@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { modalReducer,modal2Reducer, boardSwitchReducer, toastyActionhReducer, loaderActionhReducer } from './slice';
+import { modalReducer,modal2Reducer, boardSwitchReducer, toastyActionhReducer, loaderActionhReducer, itsTaskIdReducer } from './slice';
 
 export const store = configureStore({
   reducer: {
@@ -7,7 +7,8 @@ export const store = configureStore({
     modal2: modal2Reducer,
     boardSwitch: boardSwitchReducer,
     toastyAction: toastyActionhReducer,
-    loaderAction: loaderActionhReducer
+    loaderAction: loaderActionhReducer,
+    itsTaskId: itsTaskIdReducer
   },
 });
 

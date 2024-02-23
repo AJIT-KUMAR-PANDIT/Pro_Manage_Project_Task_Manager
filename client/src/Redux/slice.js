@@ -103,3 +103,26 @@ export const loaderAction = createSlice({
 export const { toggleLoader } = loaderAction.actions;
 
 export const loaderActionhReducer = loaderAction.reducer;
+
+
+const initialItsTaskIdState = {
+  taskId: null, // Assuming initial value for task ID is null
+};
+
+// Slice for itsTaskId
+export const itsTaskIdSlice = createSlice({
+  name: 'itsTaskId',
+  initialState: initialItsTaskIdState,
+  reducers: {
+    setTaskId: (state, action) => {
+      state.taskId = action.payload; // Set the task ID to the provided value
+    },
+    clearTaskId: (state) => {
+      state.taskId = null; // Clear the task ID
+    },
+  },
+});
+
+export const { setTaskId, clearTaskId } = itsTaskIdSlice.actions;
+
+export const itsTaskIdReducer = itsTaskIdSlice.reducer;

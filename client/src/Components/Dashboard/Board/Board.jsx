@@ -46,6 +46,8 @@ const Board = () => {
 
     const openEditModal = useSelector(state => state.modal2.isOpen);
 
+    const taskId = useSelector((state) => state.itsTaskId.taskId);
+
     const dispatch = useDispatch();
 
     const onOpenModal = () => dispatch(openModal1());
@@ -231,7 +233,7 @@ const Board = () => {
             >
                 {
 
-                    <AddModalElementEdit />
+                    <AddModalElementEdit taskId={taskId} />
 
                 }
             </Modal>

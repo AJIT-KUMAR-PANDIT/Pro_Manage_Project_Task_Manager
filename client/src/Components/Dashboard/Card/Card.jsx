@@ -4,7 +4,7 @@ import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
-import { toggleBoardSwitch,toggleToastyAction, toggleLoader, openModal2 } from '../../../Redux/slice';
+import { toggleBoardSwitch,toggleToastyAction, toggleLoader, openModal2, setTaskId } from '../../../Redux/slice';
 import Modal from 'react-responsive-modal';
 
 const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
@@ -225,6 +225,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         dispatch(toggleLoader());
         dispatch(openModal2());
         setShowOverlay(!showOverlay);
+        dispatch(setTaskId(taskId));
     }
     
     return (
