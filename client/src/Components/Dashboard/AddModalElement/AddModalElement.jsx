@@ -105,9 +105,9 @@ const AddModalElement = () => {
                 <div style={{ display: 'flex'}}>
                     <span>Select Priority<span className={StylesAddModalElement.asterisk}>*</span></span>
                     <div className={StylesAddModalElement.priorityOptions}>
-                        <button value="HIGH PRIORITY" className={StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>
-                        <button value="MODERATE PRIORITY" className={StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
-                        <button value="LOW PRIORITY" className={StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
+                        <button value="HIGH PRIORITY" className={selectedPriority === "HIGH PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>
+                        <button value="MODERATE PRIORITY" className={ selectedPriority === "MODERATE PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
+                        <button value="LOW PRIORITY" className={ selectedPriority === "LOW PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
                     </div>
                 </div>
                 <div>
