@@ -3,6 +3,10 @@ import axios from 'axios';
 import StyleSettingsForm from './SettingsForm.module.css';
 import passEye from '../../../Assets/passEye.svg';
 import {Url} from '../../../Utils/Url';
+import { useDispatch } from 'react-redux';
+import { toggleLoader } from '../../../Redux/slice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SettingsForm = () => {
 
@@ -14,6 +18,8 @@ const SettingsForm = () => {
         password: '',
         confirmPassword: '',
     });
+
+    const dispatch = useDispatch();
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -52,15 +58,16 @@ const SettingsForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormSubmitted(true);
-
+        dispatch(toggleLoader());
         try {
             const response = await axios.post(`${baseUrl}/api/updatesettings`, formData);
-            console.log(response.data);
-            localStorage.setItem('name', formData.name);
-            // Handle success, maybe show a success message or redirect
+            console.log("response^^^^^^^",response.data);
+            localStorage.setItem('name', response.data.updatedDocument.name);
+            dispatch(toggleLoader());
+            toast.success('Updated successfully!');
         } catch (error) {
             console.error('Error updating settings:', error.response.data);
-            // Handle error, maybe show an error message to the user
+            dispatch(toggleLoader());
         }
     };
 
@@ -123,7 +130,7 @@ const SettingsForm = () => {
                     Update
                 </button>
             </form>
-            
+            <ToastContainer/>
         </div>
     );
 };

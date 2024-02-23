@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import StylesAnalytics from './Analytics.module.css';
 import { Url } from '../../../Utils/Url';
+import { useDispatch } from 'react-redux';
+import { toggleLoader } from '../../../Redux/slice';
 
 const Analytics = () => {
     const baseUrl = Url();
@@ -16,13 +18,18 @@ const Analytics = () => {
         dueDateTasks: 0,
     });
 
+    const dispatch = useDispatch();
+
     const fetchData = async () => {
         const uId = localStorage.getItem('id');
+        dispatch(toggleLoader());
         try {
             const response = await axios.get(`${baseUrl}/api/analytics/${uId}`);
             setAnalyticsData(response.data);
+            dispatch(toggleLoader());
         } catch (error) {
             console.error('Error fetching analytics:', error);
+            dispatch(toggleLoader());
         }
     };
 

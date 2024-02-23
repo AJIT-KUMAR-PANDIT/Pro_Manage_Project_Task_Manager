@@ -4,7 +4,7 @@ import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
-import { toggleBoardSwitch,toggleToastyAction } from '../../../Redux/slice';
+import { toggleBoardSwitch,toggleToastyAction, toggleLoader } from '../../../Redux/slice';
 import Modal from 'react-responsive-modal';
 
 const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
@@ -20,7 +20,6 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
 
     const dispatch = useDispatch();
 
-
     const img = () => {
         switch (priority) {
             case 'HIGH PRIORITY':
@@ -35,14 +34,17 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
     };
 
     const toggleBoard = async (newBoard) => {
+        dispatch(toggleLoader());
         try {
             const taskId = myTaskId;
             const response = await axios.post(`${baseUrl}/api/updateboard`, { taskId, newBoard });
 
             setChangeBoard(response.data.task.board);
+            dispatch(toggleLoader());
             console.log(response.data.task.board);
         } catch (error) {
             console.error('Error updating board:', error);
+            dispatch(toggleLoader());
         }
     };
 
@@ -178,11 +180,15 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
 
 
     const deleteTask = async (taskId) => {
+        dispatch(toggleLoader());
         try {
             const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`);
+            dispatch(toggleLoader());
+            window.location.reload();
             return response.data;
         } catch (error) {
             throw new Error(error.response.data.error || 'Error deleting task');
+            dispatch(toggleLoader());
         }
     };
 
@@ -190,11 +196,13 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
     const [copied, setCopied] = useState(false);
 
     const generateShareableLink = async (taskId) => {
+        dispatch(toggleLoader());
         try {
             const response = await axios.get(`${baseUrl}/api/sharelink/${taskId}`);
             setShareableLink(response.data.shareableLink);
             
             navigator.clipboard.writeText(response.data.shareableLink);
+            dispatch(toggleLoader());
             setCopied(true);
 
             dispatch(toggleToastyAction());
@@ -206,6 +214,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
             }, 1000); 
         } catch (error) {
             console.error('Error generating shareable link:', error);
+            dispatch(toggleLoader());
         }
     };
 
