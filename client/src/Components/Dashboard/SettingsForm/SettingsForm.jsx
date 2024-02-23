@@ -64,7 +64,9 @@ const SettingsForm = () => {
             console.log("response^^^^^^^",response.data);
             localStorage.setItem('name', response.data.updatedDocument.name);
             dispatch(toggleLoader());
-            toast.success('Updated successfully!');
+            if(formData.name === response.data.updatedDocument.name || formData.password === response.data.updatedDocument.password) {
+                toast.success('Updated successfully!');
+            }
         } catch (error) {
             console.error('Error updating settings:', error.response.data);
             dispatch(toggleLoader());
