@@ -198,6 +198,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
 
     const generateShareableLink = async (taskId) => {
         dispatch(toggleLoader());
+        setShowOverlay(!showOverlay);
         try {
             const response = await axios.get(`${baseUrl}/api/sharelink/${taskId}`);
             setShareableLink(response.data.shareableLink);
