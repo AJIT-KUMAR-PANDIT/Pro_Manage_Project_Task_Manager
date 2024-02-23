@@ -202,6 +202,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
 
             setTimeout(() => {
                 setCopied(false);
+                dispatch(toggleToastyAction());
             }, 1000); 
         } catch (error) {
             console.error('Error generating shareable link:', error);

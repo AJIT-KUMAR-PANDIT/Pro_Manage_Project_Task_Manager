@@ -198,17 +198,7 @@ const Board = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"/>
+            
 
             {/* ?modal start++++++++++++++++++++++++++++++++ */}
             <Modal open={isOpenModal} onClose={onCloseModal} center showCloseIcon={false}
@@ -220,6 +210,18 @@ const Board = () => {
             </Modal>
 
             {/* modal end+++++++++++++++++++++++++++++++++++ */}
+
+            <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"/>
         </>
     );
 };
