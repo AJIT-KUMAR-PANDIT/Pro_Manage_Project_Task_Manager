@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { modalReducer, boardSwitchReducer, toastyActionhReducer } from './slice';
+import { modalReducer, boardSwitchReducer, toastyActionhReducer, loaderActionhReducer } from './slice';
 
 export const store = configureStore({
   reducer: {
     modal: modalReducer,
     boardSwitch: boardSwitchReducer,
-    toastyAction: toastyActionhReducer
+    toastyAction: toastyActionhReducer,
+    loaderAction: loaderActionhReducer
   },
 });
 

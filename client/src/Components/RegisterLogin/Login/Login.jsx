@@ -5,6 +5,8 @@ import { Url } from '../../../Utils/Url';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { toggleLoader } from '../../../Redux/slice';
 
 const Login = () => {
 
@@ -18,6 +20,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
 
+    const dispatch = useDispatch();
     const [errors, setErrors] = useState({
         email: '',
         password: '',
@@ -44,7 +47,7 @@ const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setFormSubmitted(true);
-
+        dispatch(toggleLoader());
         try {
         const response = await axios.post(`${baseUrl}/api/login`, formData);
         console.log(response.data);
@@ -53,12 +56,13 @@ const Login = () => {
         localStorage.setItem('id', response.data.userId.toString());
         localStorage.setItem('name', response.data.name);
             window.location.href = '/dashboard';
-        
+            dispatch(toggleLoader());
 
 
       } catch (error) {
         console.error(error.response.data);
         toast.error(error.response.data.message);
+        dispatch(toggleLoader());
       }
     };
 

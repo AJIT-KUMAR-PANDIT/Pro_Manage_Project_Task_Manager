@@ -5,12 +5,15 @@ import { Url } from '../../../Utils/Url';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { toggleLoader } from '../../../Redux/slice';
+
 
 const Register = () => {
 
     const baseUrl = Url();
 
-
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -63,20 +66,22 @@ const Register = () => {
         if (validateFormData()) {
             // registration logic here
 
-
+            dispatch(toggleLoader());
             try {
                 const response = await axios.post(`${baseUrl}/api/register`, formData);
                 console.log(response.data);
                 toast.success(response.data.message);
-              } catch (error) {
+                dispatch(toggleLoader());
+            } catch (error) {
                 console.error(error.response.data);
                 toast.error(error.response.data.message);
-              }
+                dispatch(toggleLoader());
+            }
 
 
 
 
-            
+
             console.log('Form submitted:', formData);
         }
     };
@@ -116,83 +121,83 @@ const Register = () => {
 
     return (
         <>
-        
-        
-        <div className={StylesRegister.register}>
-            <h2 className={StylesRegister.registerTitle}>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        className={StylesRegister.inputName}
-                        type="text"
-                        name="name"
-                        placeholder="         Name"
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
-                </div>
 
-                {formSubmitted && <span className={StylesRegister.error}>{errors.name}</span>}
-                <br />
-                <div>
-                    <input
-                        className={StylesRegister.inputEmail}
-                        type="email"
-                        name="email"
-                        placeholder="         Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                    />
-                </div>
-                {formSubmitted && <span className={StylesRegister.error}>{errors.email}</span>}
-                <br />
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', flexWrap: 'nowrap' }}>
-                    <input
-                        className={StylesRegister.inputPassword}
-                        type={showPassword ? 'text' : 'password'}
-                        name="password"
-                        placeholder="         Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
-                    <img
-                        src={showPassword ? passEye : passEye}
-                        alt={showPassword ? 'Hide Password' : 'Show Password'}
-                        className={StylesRegister.passwordIcon}
-                        onClick={handleTogglePassword}
-                        style={{ position: 'relative', left: '-40px' }}
-                    />
 
-                </div>
-                {formSubmitted && <span className={StylesRegister.error}>{errors.password}</span>}
-                <br />
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', flexWrap: 'nowrap' }}>
-                    <input
-                        className={StylesRegister.inputPassword}
-                        type={showConfirmPassword ? 'text' : 'password'}
-                        name="confirmPassword"
-                        placeholder="         Confirm Password"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                    />
-                    <img
-                        src={showConfirmPassword ? passEye : passEye}
-                        alt={showConfirmPassword ? 'Hide Confirm Password' : 'Show Confirm Password'}
-                        className={StylesRegister.passwordIcon}
-                        onClick={handleToggleConfirmPassword}
-                        style={{ position: 'relative', left: '-40px' }}
-                    />
-                </div>
-                {formSubmitted && <span className={StylesRegister.error}>{errors.confirmPassword}</span>}
-                <br />
-                <button type="submit" className={StylesRegister.registerButton}>
-                    Register
-                </button>
-            </form>
+            <div className={StylesRegister.register}>
+                <h2 className={StylesRegister.registerTitle}>Register</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input
+                            className={StylesRegister.inputName}
+                            type="text"
+                            name="name"
+                            placeholder="         Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-        </div>
+                    {formSubmitted && <span className={StylesRegister.error}>{errors.name}</span>}
+                    <br />
+                    <div>
+                        <input
+                            className={StylesRegister.inputEmail}
+                            type="email"
+                            name="email"
+                            placeholder="         Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    {formSubmitted && <span className={StylesRegister.error}>{errors.email}</span>}
+                    <br />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', flexWrap: 'nowrap' }}>
+                        <input
+                            className={StylesRegister.inputPassword}
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            placeholder="         Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                        <img
+                            src={showPassword ? passEye : passEye}
+                            alt={showPassword ? 'Hide Password' : 'Show Password'}
+                            className={StylesRegister.passwordIcon}
+                            onClick={handleTogglePassword}
+                            style={{ position: 'relative', left: '-40px' }}
+                        />
 
-<ToastContainer />
+                    </div>
+                    {formSubmitted && <span className={StylesRegister.error}>{errors.password}</span>}
+                    <br />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', flexWrap: 'nowrap' }}>
+                        <input
+                            className={StylesRegister.inputPassword}
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            name="confirmPassword"
+                            placeholder="         Confirm Password"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                        />
+                        <img
+                            src={showConfirmPassword ? passEye : passEye}
+                            alt={showConfirmPassword ? 'Hide Confirm Password' : 'Show Confirm Password'}
+                            className={StylesRegister.passwordIcon}
+                            onClick={handleToggleConfirmPassword}
+                            style={{ position: 'relative', left: '-40px' }}
+                        />
+                    </div>
+                    {formSubmitted && <span className={StylesRegister.error}>{errors.confirmPassword}</span>}
+                    <br />
+                    <button type="submit" className={StylesRegister.registerButton}>
+                        Register
+                    </button>
+                </form>
+
+            </div>
+
+            <ToastContainer />
 
         </>
     );

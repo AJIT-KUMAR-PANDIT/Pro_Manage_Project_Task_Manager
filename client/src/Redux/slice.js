@@ -13,6 +13,10 @@ const initialBoardSwitch = {
 const initialtoasty={
   toasty:false
 }
+
+const initialLoader={
+  loader:false
+}
 // Slice for modal1
 export const modalSlice = createSlice({
   name: 'modal',
@@ -61,3 +65,18 @@ export const toastyAction = createSlice({
 export const { toggleToastyAction } = toastyAction.actions;
 
 export const toastyActionhReducer = toastyAction.reducer;
+
+
+export const loaderAction = createSlice({
+  name: 'loaderAction',
+  initialState: initialLoader,
+  reducers: {
+    toggleLoader: (state) => {
+      state.loader = !state.loader; // Toggle the value
+    },
+  },
+});
+
+export const { toggleLoader } = loaderAction.actions;
+
+export const loaderActionhReducer = loaderAction.reducer;
