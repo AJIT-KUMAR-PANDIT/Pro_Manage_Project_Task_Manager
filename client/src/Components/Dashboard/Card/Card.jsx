@@ -4,7 +4,7 @@ import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
-import { toggleBoardSwitch,toggleToastyAction, toggleLoader, openModal1 } from '../../../Redux/slice';
+import { toggleBoardSwitch,toggleToastyAction, toggleLoader, openModal2 } from '../../../Redux/slice';
 import Modal from 'react-responsive-modal';
 
 const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
@@ -223,12 +223,13 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
 
     const editTask = async (taskId) => {
         dispatch(toggleLoader());
-        dispatch(openModal1());
+        dispatch(openModal2());
         setShowOverlay(!showOverlay);
     }
     
     return (
         <>
+        {console.log("myTaskId========", myTaskId)}
             {img(priority)}
             {console.log("collasped========", collasped)}
             <div className={StylesCard.card}>

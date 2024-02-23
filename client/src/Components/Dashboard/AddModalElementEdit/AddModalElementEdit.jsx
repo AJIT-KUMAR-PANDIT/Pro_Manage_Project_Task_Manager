@@ -1,8 +1,8 @@
 import React, { useState, forwardRef } from 'react';
-import StylesAddModalElement from './AddModalElement.module.css';
-import ModalTaskList from '../ModalTaskList/ModalTaskList';
+import StylesAddModalElementEdit from './AddModalElementEdit.module.css';
+import ModalTaskEditList from '../ModalTaskEditList/ModalTaskEditList';
 import { useDispatch } from 'react-redux';
-import { closeModal1 , toggleLoader} from '../../../Redux/slice';
+import { closeModal2 , toggleLoader} from '../../../Redux/slice';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -10,7 +10,7 @@ import { Url } from '../../../Utils/Url';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddModalElement = () => {
+const AddModalElementEdit = () => {
     const baseUrl = Url();
     const [selectedPriority, setSelectedPriority] = useState(null);
     const dispatch = useDispatch();
@@ -21,8 +21,8 @@ const AddModalElement = () => {
 
     
     const handleCloseModal = () => {
-        // dispatch(toggleLoader());
-        dispatch(closeModal1());
+        dispatch(closeModal2());
+        dispatch(toggleLoader());
     };
 
     const handlePriorityClick = (priority) => {
@@ -86,7 +86,7 @@ const AddModalElement = () => {
     
     const DateInput = forwardRef(({ value, onClick }, ref) => (
         <button
-            className={StylesAddModalElement.button1}
+            className={StylesAddModalElementEdit.button1}
             onClick={onClick}
             ref={ref}
         >
@@ -96,26 +96,26 @@ const AddModalElement = () => {
 
     return (
         <>
-            <div className={StylesAddModalElement.addModalElement}>
-                <div className={StylesAddModalElement.title}>Title<span className={StylesAddModalElement.asterisk}> *</span></div>
+            <div className={StylesAddModalElementEdit.AddModalElementEdit}>
+                <div className={StylesAddModalElementEdit.title}>Title<span className={StylesAddModalElementEdit.asterisk}> *</span></div>
                 <div>
-                    <input id="taskTitle" type='text' className={StylesAddModalElement.inputTitle} placeholder='Enter Task Title' />
+                    <input id="taskTitle" type='text' className={StylesAddModalElementEdit.inputTitle} placeholder='Enter Task Title' />
                 </div>
                 <br />
                 <div style={{ display: 'flex'}}>
-                    <span>Select Priority<span className={StylesAddModalElement.asterisk}>*</span></span>
-                    <div className={StylesAddModalElement.priorityOptions}>
-                        <button value="HIGH PRIORITY" className={StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>
-                        <button value="MODERATE PRIORITY" className={StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
-                        <button value="LOW PRIORITY" className={StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
+                    <span>Select Priority<span className={StylesAddModalElementEdit.asterisk}>*</span></span>
+                    <div className={StylesAddModalElementEdit.priorityOptions}>
+                        <button value="HIGH PRIORITY" className={StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>
+                        <button value="MODERATE PRIORITY" className={StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
+                        <button value="LOW PRIORITY" className={StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
                     </div>
                 </div>
                 <div>
                     <br />
-                    <span>Checklist (1/3)<span className={StylesAddModalElement.asterisk}>*</span></span>
+                    <span>Checklist (1/3)<span className={StylesAddModalElementEdit.asterisk}>*</span></span>
                 </div>
-                <div className={StylesAddModalElement.checklist}>
-                    <ModalTaskList checklists={checklists} setChecklists={setChecklists} onTaskCheck={handleTaskCheck} onTaskDelete={handleTaskDelete} />
+                <div className={StylesAddModalElementEdit.checklist}>
+                    <ModalTaskEditList checklists={checklists} setChecklists={setChecklists} onTaskCheck={handleTaskCheck} onTaskDelete={handleTaskDelete} />
                 </div>
                 <br />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -128,8 +128,8 @@ const AddModalElement = () => {
                         />
                     </div>
                     <div style={{ display: 'flex', gap: '21px' }}>
-                        <button className={StylesAddModalElement.cancel} onClick={() => handleCloseModal()}>Cancel</button>
-                        <button className={StylesAddModalElement.save} onClick={handleSave}>Save</button>
+                        <button className={StylesAddModalElementEdit.cancel} onClick={() => handleCloseModal()}>Cancel</button>
+                        <button className={StylesAddModalElementEdit.save} onClick={handleSave}>Save</button>
                     </div>
                 </div>
             </div>
@@ -138,4 +138,4 @@ const AddModalElement = () => {
     );
 };
 
-export default AddModalElement;
+export default AddModalElementEdit;
