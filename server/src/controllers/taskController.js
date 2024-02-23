@@ -127,6 +127,16 @@ showPublicTasks: async (req, res) => {
   }
 },
 
+showEditTasks: async (req, res) => {
+  try {
+    const { taskId } = req.params;
+    const tasks = await Task.find({ _id: taskId }); 
+    res.status(200).json({ tasks });
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching public tasks' });
+  }
+},
+
 updateTask: async (req, res) => {
   try {
     const { taskId } = req.params;

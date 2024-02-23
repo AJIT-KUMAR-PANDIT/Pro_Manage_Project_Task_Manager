@@ -16,11 +16,11 @@ const initialBoardSwitch = {
 };
 
 const initialtoasty={
-  toasty:false
+  toasty:false,
 }
 
 const initialLoader={
-  loader:false
+  loader:false,
 }
 // Slice for modal1
 export const modalSlice = createSlice({
