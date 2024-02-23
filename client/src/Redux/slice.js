@@ -10,6 +10,9 @@ const initialBoardSwitch = {
   isBoardSwitch: false, // Assuming initial state for modal2 is closed
 };
 
+const initialtoasty={
+  toasty:false
+}
 // Slice for modal1
 export const modalSlice = createSlice({
   name: 'modal',
@@ -43,3 +46,18 @@ export const { toggleBoardSwitch } = boardSwitch.actions;
 
 export const boardSwitchReducer = boardSwitch.reducer;
 
+
+// Slice for toasty
+export const toastyAction = createSlice({
+  name: 'toastyAction',
+  initialState: initialtoasty,
+  reducers: {
+    toggleToastyAction: (state) => {
+      state.toasty = !state.toasty; // Toggle the value
+    },
+  },
+});
+
+export const { toggleToastyAction } = toastyAction.actions;
+
+export const toastyActionhReducer = toastyAction.reducer;

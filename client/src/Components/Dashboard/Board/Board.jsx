@@ -41,6 +41,7 @@ const Board = () => {
 
     const isBoardChanged = useSelector(state => state.boardSwitch.isBoardSwitch);
 
+    const isTosty = useSelector(state => state.toastyAction.toasty);
 
     const dispatch = useDispatch();
 
@@ -121,9 +122,22 @@ const Board = () => {
 
     // today date ends
 
-
     return (
         <>
+        {
+            isTosty?(
+                toast.success('Url Copied!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+            ):<></>
+        }
             {console.log("Board", tasksToDo)}
             {console.log("isBoardChanged", isBoardChanged)}
 
@@ -184,7 +198,17 @@ const Board = () => {
                     </div>
                 </div>
             </div>
-
+            <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"/>
 
             {/* ?modal start++++++++++++++++++++++++++++++++ */}
             <Modal open={isOpenModal} onClose={onCloseModal} center showCloseIcon={false}

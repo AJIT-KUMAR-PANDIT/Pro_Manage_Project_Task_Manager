@@ -4,7 +4,7 @@ import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
-import { toggleBoardSwitch } from '../../../Redux/slice';
+import { toggleBoardSwitch,toggleToastyAction } from '../../../Redux/slice';
 import Modal from 'react-responsive-modal';
 
 const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
@@ -187,26 +187,29 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
     };
 
     const [shareableLink, setShareableLink] = useState('');
-    const [showLink, setShowLink] = useState(false);
     const [copied, setCopied] = useState(false);
 
     const generateShareableLink = async (taskId) => {
         try {
             const response = await axios.get(`${baseUrl}/api/sharelink/${taskId}`);
             setShareableLink(response.data.shareableLink);
-            setShowLink(true);
-
+            
             navigator.clipboard.writeText(response.data.shareableLink);
             setCopied(true);
 
+            dispatch(toggleToastyAction());
+
+
             setTimeout(() => {
                 setCopied(false);
-            }, 5000); // Reset copied status after 5 seconds
+            }, 1000); 
         } catch (error) {
             console.error('Error generating shareable link:', error);
         }
     };
 
+
+    
     return (
         <>
             {img(priority)}
@@ -264,6 +267,8 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
             {showOverlay && (
                 <div className={StylesCard.overlay} onClick={toggleOverlay}></div>
             )}
+
+           
         </>
     );
 };

@@ -100,7 +100,7 @@ deleteTask: async (req, res) => {
 
 generateLink: async (taskId) => {
 
-  const Url = 'http://localhost:3000';
+  const Url = 'https://promanage.vercel.app';
 
   try {
     const task = await Task.findById({_id:taskId});
