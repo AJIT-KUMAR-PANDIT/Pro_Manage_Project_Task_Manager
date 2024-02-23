@@ -4,7 +4,7 @@ import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
-import { toggleBoardSwitch,toggleToastyAction, toggleLoader } from '../../../Redux/slice';
+import { toggleBoardSwitch,toggleToastyAction, toggleLoader, openModal1 } from '../../../Redux/slice';
 import Modal from 'react-responsive-modal';
 
 const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
@@ -221,6 +221,11 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
     };
 
 
+    const editTask = async (taskId) => {
+        dispatch(toggleLoader());
+        dispatch(openModal1());
+        setShowOverlay(!showOverlay);
+    }
     
     return (
         <>
@@ -235,7 +240,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                         </span>
                         {showOverlay && (
                             <div className={StylesCard.dropDown} style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
-                                <div className={StylesCard.dropDownBut}>Edit</div>
+                                <div className={StylesCard.dropDownBut} onClick={() => editTask(myTaskId)}>Edit</div>
                                 <div className={StylesCard.dropDownBut} onClick={() => generateShareableLink(myTaskId)}>Share</div>
                                 <div className={StylesCard.dropDownButDel} onClick={() => deleteTask(myTaskId)}>Delete</div>
                             </div>

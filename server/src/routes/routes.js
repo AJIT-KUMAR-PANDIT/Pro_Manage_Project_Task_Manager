@@ -16,7 +16,7 @@ router.post('/updatesettings', updateSettings);
 router.post('/updatechecklist', taskController.updateChecklist);
 router.delete('/deletetask/:taskId', taskController.deleteTask);
 router.get('/publictasks/:taskId', taskController.showPublicTasks);
-
+router.post('/updatetask', taskController.updateTask);
 // Route to fetch analytics data for a specific user
 router.get('/analytics/:userId', async (req, res) => {
     const { userId } = req.params;

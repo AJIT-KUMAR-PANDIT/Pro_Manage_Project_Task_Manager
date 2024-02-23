@@ -2,7 +2,7 @@ import React, { useState, forwardRef } from 'react';
 import StylesAddModalElement from './AddModalElement.module.css';
 import ModalTaskList from '../ModalTaskList/ModalTaskList';
 import { useDispatch } from 'react-redux';
-import { closeModal1 } from '../../../Redux/slice';
+import { closeModal1 , toggleLoader} from '../../../Redux/slice';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -22,6 +22,7 @@ const AddModalElement = () => {
     
     const handleCloseModal = () => {
         dispatch(closeModal1());
+        dispatch(toggleLoader());
     };
 
     const handlePriorityClick = (priority) => {
