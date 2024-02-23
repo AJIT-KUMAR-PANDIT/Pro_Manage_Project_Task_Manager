@@ -183,8 +183,9 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         dispatch(toggleLoader());
         try {
             const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`);
-            dispatch(toggleLoader());
+            
             window.location.reload();
+            dispatch(toggleLoader());
             return response.data;
         } catch (error) {
             throw new Error(error.response.data.error || 'Error deleting task');
