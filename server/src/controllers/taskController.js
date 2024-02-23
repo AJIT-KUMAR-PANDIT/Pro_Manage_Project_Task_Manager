@@ -140,11 +140,11 @@ showEditTasks: async (req, res) => {
 updateTask: async (req, res) => {
   try {
     const { taskId } = req.params;
-    const { title, priority, checklist, dueDate, board, userId } = req.body;
+    const { title, priority, checklist, dueDate, userId } = req.body;
 
     const updatedTask = await Task.findByIdAndUpdate(
       { _id: taskId },
-      { title, priority, checklist, dueDate, board, userId },
+      { title, priority, checklist, dueDate, userId },
       { new: true }
     );
 

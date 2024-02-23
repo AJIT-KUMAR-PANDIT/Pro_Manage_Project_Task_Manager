@@ -61,7 +61,6 @@ const AddModalElementEdit = ({ taskId }) => {
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(null);
     const uId = localStorage.getItem('id');
-    const myBoard = 'toDo';
     const [checklists, setChecklists] = useState([]);
 
     useEffect(() => {
@@ -128,7 +127,6 @@ const AddModalElementEdit = ({ taskId }) => {
         const priority = selectedPriority;
         const dueDate = startDate ? startDate.toISOString().split('T')[0] : null; // Format date as "YYYY-MM-DD"
         const userId = uId;
-        const board = myBoard;
 
         // Filter out empty tasks from the checklist
         const nonEmptyChecklist = checklists.filter(item => item.inputValue.trim() !== '');
@@ -150,8 +148,7 @@ const AddModalElementEdit = ({ taskId }) => {
             priority,
             checklist,
             dueDate,
-            userId,
-            board
+            userId            
         };
 
         console.log(data);
