@@ -7,13 +7,10 @@ import logoimg from '../../Assets/logo.svg';
 import highPriorityImg from '../../Assets/high.svg';
 import moderatePriorityImg from '../../Assets/moderate.svg';
 import lowPriorityImg from '../../Assets/low.svg';
-import { useDispatch } from 'react-redux';
-import { toggleLoader } from '../../Redux/slice';
+import NotFound from '../../Components/Dashboard/NotFound/NotFound';
 
 const Public = ({ taskId }) => {
     const baseUrl = Url();
-
-    const dispatch = useDispatch();
 
     const [publicTaskData, setPublicTaskData] = useState(0);
     let imgSrc = null;
@@ -181,7 +178,7 @@ const Public = ({ taskId }) => {
                 </div>
 
             ) : (
-                dispatch(toggleLoader())
+                <NotFound />
             )
             }
         </>
