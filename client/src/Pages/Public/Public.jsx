@@ -81,65 +81,52 @@ const Public = ({ taskId }) => {
     }, [], [taskId]);
 
 
+   
 
-    const [dueDate, setDueDate] = useState('');
-    const [newDueDate, setNewDueDate] = useState('');
-    const [dueDatePassed, setDueDatePassed] = useState(null);
 
-    useEffect(() => {
-        const today = new Date();
-        const formatted = getFormattedDate(today);
-        setDueDate(formatted);
 
-        const serverDate = null;
-        publicTaskData.checklist && publicTaskData.checklist.map((check) => (
-            serverDate==null?null:check.dueDate
-            ))
 
-        if (!serverDate) {
-            return;
-        }
 
-        const dateParts = serverDate.split('T')[0].split('-');
-        const serverDueDate = new Date(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`);
+    let theserverDate = null;
+useEffect(() => {
+    publicTaskData.checklist && publicTaskData.checklist.map((check) => {
+        theserverDate = check.dueDate;
+});
+},[],[theserverDate])
 
-        setNewDueDate(getFormattedDate(serverDueDate));
-
-        if (serverDueDate < today) {
-            setDueDatePassed(true);
-        } else {
-            setDueDatePassed(false);
-        }
-    }, []);
-
-    function getFormattedDate(date) {
-        const day = date.getDate();
-        const month = getFormattedMonth(date.getMonth());
-        const suffix = getDaySuffix(day);
-
-        return `${month} ${day}${suffix}`;
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sep", "Oct",
+      "Nov", "Dec"
+    ];
+  
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const month = monthNames[monthIndex];
+  
+    let daySuffix = "th";
+    if (day === 1 || day === 21 || day === 31) {
+      daySuffix = "st";
+    } else if (day === 2 || day === 22) {
+      daySuffix = "nd";
+    } else if (day === 3 || day === 23) {
+      daySuffix = "rd";
     }
-
-    function getFormattedMonth(month) {
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        return months[month];
-    }
-
-    function getDaySuffix(day) {
-        if (day === 1 || day === 21 || day === 31) {
-            return "st";
-        } else if (day === 2 || day === 22) {
-            return "nd";
-        } else if (day === 3 || day === 23) {
-            return "rd";
-        } else {
-            return "th";
-        }
-    }
-
+  
+    return `${month} ${day}${daySuffix}`;
+  }
+  
+  const formattedDate = formatDate(theserverDate);
+  
+  
+    
 
     return (
         <>
+        {console.log("theserverDate",theserverDate)}
             {console.log(publicTaskData)}
             {(publicTaskData) ? (
                 <div className={StylePublic.public}>
@@ -168,12 +155,17 @@ const Public = ({ taskId }) => {
                             {
                                 publicTaskData.checklist &&
                                 publicTaskData.checklist.map((check) => (
-                                    <PublicTaskList  checked={check.completed} taskName={check.taskName} />
+                                    <PublicTaskList checked={check.completed} taskName={check.taskName} />
                                 ))}
                             {console.log(publicTaskData.checklist)}
                         </div>
                         <br />
-                        {publicTaskData.checklist.map((check) => (publicTaskData.dueDate !== null && <><span className={StylePublic.dueDateTitle}>Due Date</span> &nbsp;&nbsp;&nbsp;<span className={StylePublic.dueDate}>{newDueDate}</span></>))}
+                        {(publicTaskData.dueDate !== null &&
+                            <>
+                                <span className={StylePublic.dueDateTitle}>Due Date</span> &nbsp;&nbsp;&nbsp;
+                                <span className={StylePublic.dueDate}>{formattedDate}</span>
+                            </>
+                        )}
                     </div>
                 </div>
 
