@@ -3,23 +3,24 @@ const loginUser = require("../controllers/loginController");
 const taskController = require("../controllers/taskController");
 const { analytics } = require("../controllers/analyticsController");
 const updateSettings = require("../controllers/controllersUpdateSettings");
+const verifyToken = require("../middlewares/verifyToken");
 
 const router = require("express").Router();
 
 // Routes 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.post('/addtask', taskController.addTask);
-router.post('/gettasktodo', taskController.getTaskToDo);
-router.post('/updateboard', taskController.updateBoard);
-router.post('/updatesettings', updateSettings);
-router.post('/updatechecklist', taskController.updateChecklist);
-router.delete('/deletetask/:taskId', taskController.deleteTask);
-router.get('/publictasks/:taskId', taskController.showPublicTasks);
-router.get('/edittasksshow/:taskId', taskController.showPublicTasks);
-router.put('/updatetask/:taskId', taskController.updateTask);
+router.post('/addtask',verifyToken, taskController.addTask);
+router.post('/gettasktodo',verifyToken, taskController.getTaskToDo);
+router.post('/updateboard',verifyToken, taskController.updateBoard);
+router.post('/updatesettings',verifyToken, updateSettings);
+router.post('/updatechecklist', verifyToken,taskController.updateChecklist);
+router.delete('/deletetask/:taskId',verifyToken, taskController.deleteTask);
+router.get('/publictasks/:taskId',taskController.showPublicTasks);
+router.get('/edittasksshow/:taskId',verifyToken, taskController.showPublicTasks);
+router.put('/updatetask/:taskId',verifyToken, taskController.updateTask);
 // Route to fetch analytics data for a specific user
-router.get('/analytics/:userId', async (req, res) => {
+router.get('/analytics/:userId',verifyToken, async (req, res) => {
     const { userId } = req.params;
     try {
         const userData = await analytics(userId);

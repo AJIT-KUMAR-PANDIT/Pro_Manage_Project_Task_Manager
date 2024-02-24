@@ -57,7 +57,14 @@ const Board = () => {
 
     const fetchTasksToDo = async (userId, boardDate) => {
         try {
-            const response = await axios.post(`${baseUrl}/api/gettasktodo`, { userId, boardDate });
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${baseUrl}/api/gettasktodo`, { userId, boardDate },
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            }
+            );
             return response.data.tasksToDo;
         } catch (error) {
             console.error('Error fetching tasks:', error);

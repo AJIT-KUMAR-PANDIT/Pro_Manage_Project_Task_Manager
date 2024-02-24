@@ -17,7 +17,13 @@ const AddModalElementEdit = ({ taskId }) => {
     // Function to fetch tasks for the given user ID and board date
     const fetchTasksToDo = async (userId, boardDate) => {
         try {
-            const response = await axios.post(`${baseUrl}/api/gettasktodo`, { userId, boardDate });
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${baseUrl}/api/gettasktodo`, { userId, boardDate },
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             return response.data.tasksToDo;
         } catch (error) {
             console.error('Error fetching tasks:', error);
@@ -115,7 +121,13 @@ const AddModalElementEdit = ({ taskId }) => {
 
     const updateTask = async (taskId, updatedTaskData) => {
         try {
-            const response = await axios.put(`${baseUrl}/api/edittaskshow/${taskId}`, updatedTaskData);
+            const token = localStorage.getItem('token');
+            const response = await axios.put(`${baseUrl}/api/edittaskshow/${taskId}`, updatedTaskData,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             return response.data;
         } catch (error) {
             throw new Error(error.response.data.error || 'Error updating task');
@@ -152,8 +164,13 @@ const AddModalElementEdit = ({ taskId }) => {
         };
 
         console.log(data);
-
-        axios.put(`${baseUrl}/api/updatetask/${taskId}`, data)
+const token = localStorage.getItem('token');
+        axios.put(`${baseUrl}/api/updatetask/${taskId}`, data,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(response => {
                 console.log('Task added successfully:', response.data);
                 toast.success(response.data.message);

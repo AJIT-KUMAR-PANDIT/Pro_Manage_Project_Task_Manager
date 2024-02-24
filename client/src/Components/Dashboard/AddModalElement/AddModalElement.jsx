@@ -71,8 +71,13 @@ const AddModalElement = () => {
         };
     
         console.log(data);
-    
-        axios.post(`${baseUrl}/api/addtask`, data)
+    const token = localStorage.getItem('token');
+        axios.post(`${baseUrl}/api/addtask`, data,
+        {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then(response => {
                 console.log('Task added successfully:', response.data);
                 toast.success(response.data.message);

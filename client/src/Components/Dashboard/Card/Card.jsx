@@ -37,7 +37,12 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         dispatch(toggleLoader());
         try {
             const taskId = myTaskId;
-            const response = await axios.post(`${baseUrl}/api/updateboard`, { taskId, newBoard });
+            const response = await axios.post(`${baseUrl}/api/updateboard`, { taskId, newBoard },
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
 
             setChangeBoard(response.data.task.board);
             dispatch(toggleLoader());
@@ -182,7 +187,12 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
     const deleteTask = async (taskId) => {
         dispatch(toggleLoader());
         try {
-            const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`);
+            const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             
             window.location.reload();
             dispatch(toggleLoader());
@@ -191,7 +201,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
             throw new Error(error.response.data.error || 'Error deleting task');
             dispatch(toggleLoader());
         }
-    };
+    }; 
 
     const [shareableLink, setShareableLink] = useState('');
     const [copied, setCopied] = useState(false);

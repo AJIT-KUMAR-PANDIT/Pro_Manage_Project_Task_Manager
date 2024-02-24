@@ -60,7 +60,12 @@ const SettingsForm = () => {
         setFormSubmitted(true);
         dispatch(toggleLoader());
         try {
-            const response = await axios.post(`${baseUrl}/api/updatesettings`, formData);
+            const response = await axios.post(`${baseUrl}/api/updatesettings`, formData,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             console.log("response^^^^^^^",response.data);
             localStorage.setItem('name', response.data.updatedDocument.name);
             dispatch(toggleLoader());

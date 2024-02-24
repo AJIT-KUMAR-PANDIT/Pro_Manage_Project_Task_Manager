@@ -24,7 +24,12 @@ const Analytics = () => {
         const uId = localStorage.getItem('id');
         dispatch(toggleLoader());
         try {
-            const response = await axios.get(`${baseUrl}/api/analytics/${uId}`);
+            const response = await axios.get(`${baseUrl}/api/analytics/${uId}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setAnalyticsData(response.data);
             dispatch(toggleLoader());
         } catch (error) {

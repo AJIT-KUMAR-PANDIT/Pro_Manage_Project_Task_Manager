@@ -5,6 +5,7 @@ import Public from './Pages/Public/Public';
 import { useParams } from 'react-router-dom';
 import NotFound from './Components/Dashboard/NotFound/NotFound';
 import { useSelector } from 'react-redux';
+import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes';
 
 function App() {
   const loader = 'Assets/loader.gif';
@@ -14,11 +15,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<RegisterLogin />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route
-            path="/public/sharedtasklink/:taskId"
-            element={<PublicWithTaskId />}
-          />
+          <Route path="/public/sharedtasklink/:taskId" element={<PublicWithTaskId />} />
+            <Route path="/dashboard" element={<ProtectedRoutes><Dashboard /></ProtectedRoutes >} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

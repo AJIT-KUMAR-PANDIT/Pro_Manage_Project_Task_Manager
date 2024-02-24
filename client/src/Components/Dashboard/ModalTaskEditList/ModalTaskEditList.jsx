@@ -36,8 +36,8 @@ const ModalTaskEditList = ({ checklists, setChecklists, onTaskCheck, onTaskDelet
   };
 
   const handleDeleteClick = (id) => {
-    const filteredChecklists = checklists.filter((checklist) => checklist.id !== id);
-    setChecklists(filteredChecklists);
+    const updatedChecklists = checklists.filter((checklist) => checklist.id !== id);
+    setChecklists(updatedChecklists);
     // Pass the updated data to the parent component
     onTaskDelete(id);
   };
