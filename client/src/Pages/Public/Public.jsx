@@ -161,10 +161,10 @@ function formatDate(dateString) {
                         </div>
                         <br />
                         {(publicTaskData.dueDate !== null &&
-                            <>
+                            <div className={StylePublic.dueDateDiv}>
                                 <span className={StylePublic.dueDateTitle}>Due Date</span> &nbsp;&nbsp;&nbsp;
                                 <span className={StylePublic.dueDate}>{formattedDate}</span>
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>

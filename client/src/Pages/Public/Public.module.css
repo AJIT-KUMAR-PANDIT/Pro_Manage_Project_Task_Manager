@@ -102,3 +102,8 @@
     text-align: left;
 
 }
+
+.dueDateDiv{
+    position: relative;
+    bottom: 0px;
+}
