@@ -11,7 +11,7 @@ import NotFound from '../../Components/Dashboard/NotFound/NotFound';
 
 const Public = ({ taskId }) => {
     const baseUrl = Url();
-    
+
     const [publicTaskData, setPublicTaskData] = useState(0);
     let imgSrc = null;
 
@@ -31,7 +31,7 @@ const Public = ({ taskId }) => {
         showPublicTaskData(taskId);
     }, [], [taskId]);
 
-    
+
 
     const setImage = (priority) => {
         switch (priority) {
@@ -53,14 +53,14 @@ const Public = ({ taskId }) => {
     const [taskName, setTaskName] = useState('');
     const [check, setCheck] = useState(null);
 
-    
-var totalChecks = 0;
+
+    var totalChecks = 0;
 
     const funTotalChecks = () => {
         publicTaskData.checklist &&
-        publicTaskData.checklist.map((taskList, key) => (
-            totalChecks++
-        ));
+            publicTaskData.checklist.map((taskList, key) => (
+                totalChecks++
+            ));
         return totalChecks;
     };
 
@@ -68,11 +68,11 @@ var totalChecks = 0;
 
     const funTotalChecksMarked = () => {
         publicTaskData.checklist &&
-        publicTaskData.checklist.map((taskList, key) => {
-            if (taskList.completed) {
-                checksMarked++;
-            }
-        });
+            publicTaskData.checklist.map((taskList, key) => {
+                if (taskList.completed) {
+                    checksMarked++;
+                }
+            });
         return checksMarked;
     };
 
@@ -81,10 +81,66 @@ var totalChecks = 0;
     }, [], [taskId]);
 
 
+
+    const [dueDate, setDueDate] = useState('');
+    const [newDueDate, setNewDueDate] = useState('');
+    const [dueDatePassed, setDueDatePassed] = useState(null);
+
+    useEffect(() => {
+        const today = new Date();
+        const formatted = getFormattedDate(today);
+        setDueDate(formatted);
+
+        const serverDate = null;
+        publicTaskData.checklist && publicTaskData.checklist.map((check) => (
+            serverDate==null?null:check.dueDate
+            ))
+
+        if (!serverDate) {
+            return;
+        }
+
+        const dateParts = serverDate.split('T')[0].split('-');
+        const serverDueDate = new Date(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`);
+
+        setNewDueDate(getFormattedDate(serverDueDate));
+
+        if (serverDueDate < today) {
+            setDueDatePassed(true);
+        } else {
+            setDueDatePassed(false);
+        }
+    }, []);
+
+    function getFormattedDate(date) {
+        const day = date.getDate();
+        const month = getFormattedMonth(date.getMonth());
+        const suffix = getDaySuffix(day);
+
+        return `${month} ${day}${suffix}`;
+    }
+
+    function getFormattedMonth(month) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return months[month];
+    }
+
+    function getDaySuffix(day) {
+        if (day === 1 || day === 21 || day === 31) {
+            return "st";
+        } else if (day === 2 || day === 22) {
+            return "nd";
+        } else if (day === 3 || day === 23) {
+            return "rd";
+        } else {
+            return "th";
+        }
+    }
+
+
     return (
         <>
             {console.log(publicTaskData)}
-            {(publicTaskData) ? (
                 <div className={StylePublic.public}>
                     <div className={StylePublic.logo}>
                         <img src={logoimg} alt='logo' style={{ width: '51px' }} />&nbsp;&nbsp;&nbsp;Pro Manage
@@ -111,25 +167,14 @@ var totalChecks = 0;
                             {
                                 publicTaskData.checklist &&
                                 publicTaskData.checklist.map((check) => (
-                                    <PublicTaskList itsDueDate={publicTaskData.dueDate} checked={check.completed} taskName={check.taskName} />
+                                    <PublicTaskList  checked={check.completed} taskName={check.taskName} />
                                 ))}
                             {console.log(publicTaskData.checklist)}
                         </div>
                         <br />
-                        {/* <button onClick={() => generateShareableLink(taskId)}>Generate Shareable Link</button>
-                        {showLink && (
-                            <div className={StylePublic.shareableLink}>
-                                <p>Shareable Link:</p>
-                                <a href={shareableLink} target="_blank" rel="noopener noreferrer">{shareableLink}</a>
-                            </div>
-                        )} */}
+                        {publicTaskData.checklist.map((check) => (publicTaskData.dueDate !== null && <><span className={StylePublic.dueDateTitle}>Due Date</span> &nbsp;&nbsp;&nbsp;<span className={StylePublic.dueDate}>{newDueDate}</span></>))}
                     </div>
                 </div>
-
-            ) : (
-                <NotFound />
-            )
-            }
         </>
     );
 }
