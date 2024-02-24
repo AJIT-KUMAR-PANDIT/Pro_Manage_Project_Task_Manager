@@ -19,6 +19,10 @@ function App() {
             path="/public/sharedtasklink/:taskId"
             element={<PublicWithTaskId />}
           />
+          <Route
+            path="/public/sharedtasklink/:taskId/*"
+            element={<NotFound />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

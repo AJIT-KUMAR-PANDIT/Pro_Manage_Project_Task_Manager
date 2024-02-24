@@ -7,10 +7,13 @@ import logoimg from '../../Assets/logo.svg';
 import highPriorityImg from '../../Assets/high.svg';
 import moderatePriorityImg from '../../Assets/moderate.svg';
 import lowPriorityImg from '../../Assets/low.svg';
-import NotFound from '../../Components/Dashboard/NotFound/NotFound';
+import { useDispatch } from 'react-redux';
+import { toggleLoader } from '../../Redux/slice';
 
 const Public = ({ taskId }) => {
     const baseUrl = Url();
+
+    const dispatch = useDispatch();
 
     const [publicTaskData, setPublicTaskData] = useState(0);
     let imgSrc = null;
@@ -141,6 +144,7 @@ const Public = ({ taskId }) => {
     return (
         <>
             {console.log(publicTaskData)}
+            {(publicTaskData) ? (
                 <div className={StylePublic.public}>
                     <div className={StylePublic.logo}>
                         <img src={logoimg} alt='logo' style={{ width: '51px' }} />&nbsp;&nbsp;&nbsp;Pro Manage
@@ -175,6 +179,11 @@ const Public = ({ taskId }) => {
                         {publicTaskData.checklist.map((check) => (publicTaskData.dueDate !== null && <><span className={StylePublic.dueDateTitle}>Due Date</span> &nbsp;&nbsp;&nbsp;<span className={StylePublic.dueDate}>{newDueDate}</span></>))}
                     </div>
                 </div>
+
+            ) : (
+                dispatch(toggleLoader())
+            )
+            }
         </>
     );
 }
