@@ -42,5 +42,4 @@ app.listen(port,()=>{
     .then(console.log(`Server is running on port ${port}`))
     .catch(err => console.error(err))
   
-  
   });

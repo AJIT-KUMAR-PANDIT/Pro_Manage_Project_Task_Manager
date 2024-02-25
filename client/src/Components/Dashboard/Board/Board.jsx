@@ -5,11 +5,11 @@ import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import AddModalElement from '../AddModalElement/AddModalElement';
 import { useSelector, useDispatch } from 'react-redux'
-import { closeModal1, openModal1, toggleLoader } from '../../../Redux/slice'
+import { closeModal1, openModal1, toggleLoader } from '../../../Redux/slice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { Url } from '../../../Utils/Url'
+import { Url } from '../../../Utils/Url';
 import AddModalElementEdit from '../AddModalElementEdit/AddModalElementEdit';
 
 const Board = () => {
