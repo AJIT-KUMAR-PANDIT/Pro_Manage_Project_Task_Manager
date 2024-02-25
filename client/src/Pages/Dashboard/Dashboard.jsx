@@ -30,6 +30,14 @@ const Dashboard = () => {
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
 
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('id');
+        localStorage.removeItem('name');
+        localStorage.removeItem('das');
+        window.location.href = '/';
+    }
+
     return (
         <>
             <div className={StylesDashboard.dashboard} style={{ width: '90vw' }}>
@@ -66,7 +74,7 @@ const Dashboard = () => {
                 <div>
                     <div className={StylesDashboard.logoutText}>Are you sure you want to Logout?</div>
                     <br/>
-                    <div className={StylesDashboard.yesLogout}>Yes,  Logout</div>
+                    <div className={StylesDashboard.yesLogout} onClick={logout}>Yes,  Logout</div>
                     <br/>
                     <div className={StylesDashboard.cancel} onClick={onCloseModal}>Cancel</div>
                 </div>
