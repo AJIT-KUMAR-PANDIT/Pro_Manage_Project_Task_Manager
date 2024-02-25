@@ -19,6 +19,11 @@ const TaskList = ({ taskName, completed, taskListId, checkListId }) => {
         taskId: taskListId,
         checklistItemId: checkListId,
         completed: newChecked,
+      },
+      {
+          headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
       });
 
       console.log(response.data.message);

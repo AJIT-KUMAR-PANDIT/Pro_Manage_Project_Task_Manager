@@ -55,6 +55,7 @@ const Login = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('id', response.data.userId.toString());
         localStorage.setItem('name', response.data.name);
+        localStorage.setItem('das', true);
             window.location.href = '/dashboard';
             dispatch(toggleLoader());
 
@@ -62,6 +63,7 @@ const Login = () => {
       } catch (error) {
         console.error(error.response.data);
         toast.error(error.response.data.message);
+        localStorage.setItem('das', false);
         dispatch(toggleLoader());
       }
     };

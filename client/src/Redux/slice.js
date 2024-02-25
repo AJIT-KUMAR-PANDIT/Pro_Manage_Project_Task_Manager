@@ -22,6 +22,8 @@ const initialtoasty={
 const initialLoader={
   loader:false,
 }
+
+
 // Slice for modal1
 export const modalSlice = createSlice({
   name: 'modal',
@@ -126,3 +128,4 @@ export const itsTaskIdSlice = createSlice({
 export const { setTaskId, clearTaskId } = itsTaskIdSlice.actions;
 
 export const itsTaskIdReducer = itsTaskIdSlice.reducer;
+
