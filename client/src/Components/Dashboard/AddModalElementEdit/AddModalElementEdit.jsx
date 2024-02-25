@@ -1,8 +1,8 @@
-import React, { useState, forwardRef, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import StylesAddModalElementEdit from './AddModalElementEdit.module.css';
-import ModalTaskEditList from '../ModalTaskEditList/ModalTaskEditList';
+import ModalTaskList from '../ModalTaskList/ModalTaskList';
 import { useDispatch } from 'react-redux';
-import { closeModal2, toggleLoader } from '../../../Redux/slice';
+import { closeModal1, toggleLoader } from '../../../Redux/slice';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -12,133 +12,66 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddModalElementEdit = ({ taskId }) => {
     const baseUrl = Url();
-    const [selectedOption, setSelectedOption] = useState('thisWeek');
-    
-    // Function to fetch tasks for the given user ID and board date
-    const fetchTasksToDo = async (userId, boardDate) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.post(`${baseUrl}/api/gettasktodo`, { userId, boardDate },
-            {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            return response.data.tasksToDo;
-        } catch (error) {
-            console.error('Error fetching tasks:', error);
-            return [];
-        }
-    };
-
-    const [tasksToDo, setTasksToDo] = useState([]);
-    const [taskData, setTaskData] = useState({
-        title: '',
-        priority: null,
-        checklist: [],
-        dueDate: null
-    });
-
-    useEffect(() => {
-        const userId = localStorage.getItem('id');
-        const fetchData = async () => {
-            try {
-                const tasks = await fetchTasksToDo(userId, selectedOption);
-                setTasksToDo(tasks);
-                // Fetch task data for the given taskId and set it to state
-                const task = tasks.find(task => task._id === taskId);
-                if (task) {
-                    setTaskData({
-                        title: task.title,
-                        priority: task.priority,
-                        checklist: task.checklist,
-                        dueDate: task.dueDate ? new Date(task.dueDate) : null
-                    });
-                }
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-            }
-        };
-
-        fetchData();
-    }, [taskId, selectedOption]);
-
     const [selectedPriority, setSelectedPriority] = useState(null);
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(null);
     const uId = localStorage.getItem('id');
+    const myBoard = 'toDo';
     const [checklists, setChecklists] = useState([]);
+    const [taskData, setTaskData] = useState(null);
 
     useEffect(() => {
-        // Prefill priority when task data is loaded
-        if (taskData.priority) {
-            setSelectedPriority(taskData.priority);
-        }
+        fetchTaskData();
+    }, []);
 
-        // Prefill checklist when task data is loaded
-        if (taskData.checklist) {
-            setChecklists(taskData.checklist.map(item => ({
-                inputValue: item.taskName,
-                isChecked: item.completed
-            })));
-        }
-
-        // Prefill due date when task data is loaded
-        if (taskData.dueDate) {
-            setStartDate(new Date(taskData.dueDate));
-        }
-    }, [taskData]);
+    const fetchTaskData = () => {
+        axios.get(`${baseUrl}/api/edittasksshow/${taskId}`,
+        {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+                const task = response.data.tasks[0];
+                setTaskData(task);
+                setSelectedPriority(task.priority);
+                setStartDate(task.dueDate ? new Date(task.dueDate) : null);
+                setChecklists(task.checklist.map(item => ({
+                    inputValue: item.taskName,
+                    isChecked: item.completed
+                })));
+            })
+            .catch(error => {
+                console.error('Error fetching task data:', error);
+                toast.error('Error fetching task data');
+            });
+    };
 
     const handleCloseModal = () => {
-        dispatch(closeModal2());
-        dispatch(toggleLoader());
+        // dispatch(toggleLoader());
+        dispatch(closeModal1());
     };
 
     const handlePriorityClick = (priority) => {
         setSelectedPriority(priority);
     };
 
-    const handleTaskCheck = (index, completed) => {
+    const handleTaskCheck = (taskId, completed) => {
         // Handle task checkbox click
-        const updatedChecklist = [...checklists];
-        updatedChecklist[index].isChecked = completed;
-        setChecklists(updatedChecklist);
+        console.log('Task checkbox clicked - Task ID:', taskId, 'Completed:', completed);
     };
 
-    const handleTaskDelete = (index) => {
+    const handleTaskDelete = (taskId) => {
         // Handle task delete button click
-        const updatedChecklist = [...checklists];
-        updatedChecklist.splice(index, 1);
-        setChecklists(updatedChecklist);
-    };
-
-    const handleTitleChange = (value) => {
-        setTaskData({
-            ...taskData,
-            title: value
-        });
-    };
-
-    const updateTask = async (taskId, updatedTaskData) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.put(`${baseUrl}/api/edittaskshow/${taskId}`, updatedTaskData,
-            {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            return response.data;
-        } catch (error) {
-            throw new Error(error.response.data.error || 'Error updating task');
-        }
+        console.log('Task delete button clicked - Task ID:', taskId);
     };
 
     const handleSave = () => {
-        const title = taskData.title;
+        const title = document.getElementById('taskTitle').value;
         const priority = selectedPriority;
         const dueDate = startDate ? startDate.toISOString().split('T')[0] : null; // Format date as "YYYY-MM-DD"
         const userId = uId;
+        const board = myBoard;
 
         // Filter out empty tasks from the checklist
         const nonEmptyChecklist = checklists.filter(item => item.inputValue.trim() !== '');
@@ -160,37 +93,26 @@ const AddModalElementEdit = ({ taskId }) => {
             priority,
             checklist,
             dueDate,
-            userId            
+            userId,
+            board
         };
 
         console.log(data);
-const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         axios.put(`${baseUrl}/api/updatetask/${taskId}`, data,
-        {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then(response => {
-                console.log('Task added successfully:', response.data);
+                console.log('Task updated successfully:', response.data);
                 toast.success(response.data.message);
                 handleCloseModal();
             })
             .catch(error => {
-                console.error('Error adding task:', error);
-                toast.error(error);
-            });
-
-        // Update existing task with new data
-        updateTask(taskId, data)
-            .then(response => {
-                console.log('Task updated successfully:', response);
-                toast.success('Task updated successfully');
-                handleCloseModal();
-            })
-            .catch(error => {
                 console.error('Error updating task:', error);
-                toast.error('Error updating task');
+                toast.error(error);
             });
     };
 
@@ -204,20 +126,24 @@ const token = localStorage.getItem('token');
         </button>
     ));
 
+    if (!taskData) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
-            <div className={StylesAddModalElementEdit.AddModalElementEdit}>
+            <div className={StylesAddModalElementEdit.addModalElement}>
                 <div className={StylesAddModalElementEdit.title}>Title<span className={StylesAddModalElementEdit.asterisk}> *</span></div>
                 <div>
-                    <input id="taskTitle" type='text' className={StylesAddModalElementEdit.inputTitle} placeholder='Enter Task Title' value={taskData.title} onChange={(e) => handleTitleChange(e.target.value)} />
+                    <input id="taskTitle" type='text' className={StylesAddModalElementEdit.inputTitle} placeholder='Enter Task Title' defaultValue={taskData.title} />
                 </div>
                 <br />
                 <div style={{ display: 'flex' }}>
                     <span>Select Priority<span className={StylesAddModalElementEdit.asterisk}>*</span></span>
                     <div className={StylesAddModalElementEdit.priorityOptions}>
-                        <button value="HIGH PRIORITY" className={StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>
-                        <button value="MODERATE PRIORITY" className={StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
-                        <button value="LOW PRIORITY" className={StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
+                        <button value="HIGH PRIORITY" className={selectedPriority === "HIGH PRIORITY" ? StylesAddModalElementEdit.addPriorityColor : StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>
+                        <button value="MODERATE PRIORITY" className={selectedPriority === "MODERATE PRIORITY" ? StylesAddModalElementEdit.addPriorityColor : StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
+                        <button value="LOW PRIORITY" className={selectedPriority === "LOW PRIORITY" ? StylesAddModalElementEdit.addPriorityColor : StylesAddModalElementEdit.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
                     </div>
                 </div>
                 <div>
@@ -225,7 +151,7 @@ const token = localStorage.getItem('token');
                     <span>Checklist (1/3)<span className={StylesAddModalElementEdit.asterisk}>*</span></span>
                 </div>
                 <div className={StylesAddModalElementEdit.checklist}>
-                    <ModalTaskEditList checklists={checklists} setChecklists={setChecklists} onTaskCheck={handleTaskCheck} onTaskDelete={handleTaskDelete} />
+                    <ModalTaskList checklists={checklists} setChecklists={setChecklists} onTaskCheck={handleTaskCheck} onTaskDelete={handleTaskDelete} />
                 </div>
                 <br />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>

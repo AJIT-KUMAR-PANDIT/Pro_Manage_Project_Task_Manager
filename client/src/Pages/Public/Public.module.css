@@ -70,7 +70,7 @@
 
 .taskList {
     overflow-y: scroll;
-    height: 300px;
+    max-height: 300px;
 }
 
 
