@@ -16,7 +16,7 @@
     padding-right: 51px;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1026px) {
+/* @media screen and (min-width: 768px) and (max-width: 1026px) {
     .inputTask {
         width: 37vw;
     }
@@ -35,7 +35,7 @@
     .inputTask {
         width: 37vw;
     }
-}
+} */
 
 
 
