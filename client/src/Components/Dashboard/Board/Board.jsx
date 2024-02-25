@@ -59,11 +59,11 @@ const Board = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(`${baseUrl}/api/gettasktodo`, { userId, boardDate },
-            {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
                 }
-            }
             );
             return response.data.tasksToDo;
         } catch (error) {
@@ -164,8 +164,8 @@ const Board = () => {
                     <div className={StylesBoard.headerMenu}>
                         <div className={StylesBoard.dropdown}>
                             <select className={StylesBoard.dropdown} onChange={handleSelectChange} value={selectedOption}>
-                                <option value="thisWeek">This Week</option>
                                 <option value="today">Today</option>
+                                <option value="thisWeek">This Week</option>
                                 <option value="thisMonth">This Month</option>
                             </select>
                         </div>
