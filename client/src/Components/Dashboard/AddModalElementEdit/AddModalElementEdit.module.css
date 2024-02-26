@@ -71,11 +71,13 @@
 }
 
 .addPriorityColor {
-    border: 1px solid #e2e2e2;
     border-radius: 8px;
+    border: solid transparent;
     padding: 5px 10px;
-    /* width: 135px; */
-    height: 31px;
+    /* width: 175px;
+    height: 31px; */
+
+    background: #eeecec;
 
     font-family: Poppins;
     font-size: 14px;
@@ -84,11 +86,9 @@
     letter-spacing: 0em;
     text-align: left;
 
-    color: #fdfcfc;
+    color: #767575;
 
-    background-color: rgba(255, 127, 80, 0.815);
 
-    
 }
 
 
