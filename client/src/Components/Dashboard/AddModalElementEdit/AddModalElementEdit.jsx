@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useEffect } from 'react';
 import StylesAddModalElementEdit from './AddModalElementEdit.module.css';
 import ModalTaskListEdit from '../ModalTaskListEdit/ModalTaskListEdit';
 import { useDispatch } from 'react-redux';
-import { closeModal1 } from '../../../Redux/slice';
+import { closeModal2, toggleLoader } from '../../../Redux/slice';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -46,7 +46,8 @@ const AddModalElementEdit = ({ taskId }) => {
     };
 
     const handleCloseModal = () => {
-        dispatch(closeModal1());
+        dispatch(toggleLoader());
+        dispatch(closeModal2());
     };
 
     const handlePriorityClick = (priority) => {
