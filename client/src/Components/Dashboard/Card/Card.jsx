@@ -283,10 +283,10 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                 <br />
                 <div className={StylesCard.cardFooter} style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '1px' }}>
                     {
-                        dueDatePassed ?
+                        newDueDate ?
                             <div className={dueDatePassed && changeBoard !== "done" ? StylesCard.butFooterDatePassed : changeBoard === "done" ? StylesCard.butFooterDateGreen : StylesCard.butFooterDate}>{newDueDate}</div>
-                            : null
-                    }
+                             : null
+                    } 
 
                     <div className={StylesCard.cardFooter} style={{ position: 'relative', right: '-21px', display: 'flex', gap: '1px' }}>
                         {handleChange(changeBoard)}

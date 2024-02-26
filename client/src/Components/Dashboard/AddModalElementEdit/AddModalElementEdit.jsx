@@ -33,7 +33,7 @@ const AddModalElementEdit = ({ taskId }) => {
         .then(response => {
             const task = response.data.tasks[0];
             setSelectedPriority(task.priority);
-            setStartDate(new Date(task.dueDate));
+            setStartDate(task.dueDate? task.dueDate : null);
             setChecklists(task.checklist);
             setTaskTitle(task.title);
 
