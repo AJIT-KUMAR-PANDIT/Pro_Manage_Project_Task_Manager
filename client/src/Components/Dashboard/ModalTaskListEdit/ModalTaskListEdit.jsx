@@ -15,7 +15,7 @@ const ModalTaskListEdit = ({ checklists, setChecklists, onTaskCheck, onTaskDelet
 
   const handleInputChange = (e, id) => {
     const updatedChecklists = checklists.map((checklist) => {
-      if (checklist.id === id) {
+      if (checklist._id === id) {
         return { ...checklist, taskName: e.target.value };
       }
       return checklist;
@@ -25,18 +25,18 @@ const ModalTaskListEdit = ({ checklists, setChecklists, onTaskCheck, onTaskDelet
 
   const handleCheckboxChange = (id) => {
     const updatedChecklists = checklists.map((checklist) => {
-      if (checklist.id === id) {
+      if (checklist._id === id) {
         return { ...checklist, completed: !checklist.completed };
       }
       return checklist;
     });
     setChecklists(updatedChecklists);
     // Pass the updated data to the parent component
-    onTaskCheck(id, updatedChecklists.find(checklist => checklist.id === id).completed);
+    onTaskCheck(id, updatedChecklists.find(checklist => checklist._id === id).completed);
   };
 
   const handleDeleteClick = (id) => {
-    const filteredChecklists = checklists.filter((checklist) => checklist.id !== id);
+    const filteredChecklists = checklists.filter((checklist) => checklist._id !== id);
     setChecklists(filteredChecklists);
     // Pass the updated data to the parent component
     onTaskDelete(id);
@@ -45,21 +45,22 @@ const ModalTaskListEdit = ({ checklists, setChecklists, onTaskCheck, onTaskDelet
   return (
     <>
       {checklists.map((checklist) => (
-        <div key={checklist.id} className={StylesModalTaskListEdit.checklist}>
+        <div key={checklist._id} className={StylesModalTaskListEdit.checklist}>
+        {  console.log("checklist._id=====",checklist._id)}
           <input
             type="checkbox"
             checked={checklist.completed}
-            onChange={() => handleCheckboxChange(checklist.id)}
+            onChange={() => handleCheckboxChange(checklist._id)}
             className={StylesModalTaskListEdit.checkbox}
           />
           <input
             type="text"
             placeholder="Add a Task"
             value={checklist.taskName}
-            onChange={(e) => handleInputChange(e, checklist.id)}
+            onChange={(e) => handleInputChange(e, checklist._id)}
             className={StylesModalTaskListEdit.inputTask}
           />
-          <button className={StylesModalTaskListEdit.deleteButton} onClick={() => handleDeleteClick(checklist.id)}>
+          <button className={StylesModalTaskListEdit.deleteButton} onClick={() => handleDeleteClick(checklist._id)}>
             <img src="Assets/delete.svg" alt="delete" />
           </button>
         </div>

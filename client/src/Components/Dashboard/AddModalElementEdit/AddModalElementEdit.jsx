@@ -56,7 +56,7 @@ const AddModalElementEdit = ({ taskId }) => {
 
     const handleTaskCheck = (id, completed) => {
         const updatedChecklists = checklists.map((checklist) => {
-            if (checklist.id === id) {
+            if (checklist._id === id) {
                 return { ...checklist, completed: completed };
             }
             return checklist;
@@ -65,7 +65,7 @@ const AddModalElementEdit = ({ taskId }) => {
     };
 
     const handleTaskDelete = (id) => {
-        const filteredChecklists = checklists.filter((checklist) => checklist.id !== id);
+        const filteredChecklists = checklists.filter((checklist) => checklist._id !== id);
         setChecklists(filteredChecklists);
     };
 
