@@ -35,9 +35,16 @@
     background: #fff;
 }
 
+
+@media screen and (max-width: 425px) {
+    .cards {
+      width: 70vw; 
+    }
+  }
+
 .priorityText {
     font-family: Poppins;
-    font-size: 18px;
+    font-size: 11px;
     font-weight: 500;
     line-height: 12px;
     letter-spacing: 0em;

@@ -2,8 +2,8 @@
     border: 1px solid #e2e2e2;
     border-radius: 12px;
     padding: 12px;
-    width: 41vw;
-    height: 36px;
+    width: 47vw;
+    height: 61px;
 
     font-family: Inter;
     font-size: 21px;
@@ -14,29 +14,16 @@
 
     padding-left: 61px;
     padding-right: 51px;
+
+    box-sizing: border-box;
 }
 
-/* @media screen and (min-width: 768px) and (max-width: 1026px) {
+@media screen and (max-width: 425px) {
     .inputTask {
-        width: 37vw;
+      width: 70vw; 
+      box-sizing: border-box;
     }
-}
-
-
-@media screen and (min-width: 768px) and (max-width: 768px){
-    .inputTask {
-        width: 25vw;
-    }
-}
-
-
-
-@media screen and (max-width: 1024px) {
-    .inputTask {
-        width: 37vw;
-    }
-} */
-
+  }
 
 
 .inputTask::placeholder {
