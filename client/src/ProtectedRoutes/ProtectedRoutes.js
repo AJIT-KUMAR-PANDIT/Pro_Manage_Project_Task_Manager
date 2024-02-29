@@ -5,7 +5,7 @@ const ProtectedRoutes = ({ children }) => {
   const isAuthenticated = localStorage.getItem('das');
 
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 18000);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 54000);
 
   useTimer({
     expiryTimestamp, onExpire: () => {
