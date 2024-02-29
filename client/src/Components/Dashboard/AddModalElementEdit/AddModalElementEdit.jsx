@@ -30,19 +30,19 @@ const AddModalElementEdit = ({ taskId }) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(response => {
-            const task = response.data.tasks[0];
-            setSelectedPriority(task.priority);
-            setStartDate(task.dueDate? task.dueDate : null);
-            setChecklists(task.checklist);
-            setTaskTitle(task.title);
+            .then(response => {
+                const task = response.data.tasks[0];
+                setSelectedPriority(task.priority);
+                setStartDate(task.dueDate ? task.dueDate : null);
+                setChecklists(task.checklist);
+                setTaskTitle(task.title);
 
-            console.log("task.checklist======",task.checklist);
-        })
-        .catch(error => {
-            console.error('Error fetching task data:', error);
-            toast.error('Error fetching task data');
-        });
+                console.log("task.checklist======", task.checklist);
+            })
+            .catch(error => {
+                console.error('Error fetching task data:', error);
+                toast.error('Error fetching task data');
+            });
     };
 
     const handleCloseModal = () => {
@@ -90,7 +90,7 @@ const AddModalElementEdit = ({ taskId }) => {
         }));
 
         const data = {
-            title: taskTitle, 
+            title: taskTitle,
             priority,
             checklist,
             dueDate,
@@ -103,14 +103,14 @@ const AddModalElementEdit = ({ taskId }) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(response => {
-            toast.success(response.data.message);
-            handleCloseModal();
-        })
-        .catch(error => {
-            console.error('Error updating task:', error);
-            toast.error(error);
-        });
+            .then(response => {
+                toast.success(response.data.message);
+                handleCloseModal();
+            })
+            .catch(error => {
+                console.error('Error updating task:', error);
+                toast.error(error);
+            });
     };
 
     const DateInput = forwardRef(({ value, onClick }, ref) => (
@@ -123,6 +123,8 @@ const AddModalElementEdit = ({ taskId }) => {
         </button>
     ));
 
+    let checkMarkMe = 0;
+
     return (
         <>
             <div className={StylesAddModalElementEdit.AddModalElementEdit}>
@@ -133,12 +135,12 @@ const AddModalElementEdit = ({ taskId }) => {
                         type='text'
                         className={StylesAddModalElementEdit.inputTitle}
                         placeholder='Enter Task Title'
-                        value={taskTitle} // Binding value to taskTitle state
+                        value={taskTitle}
                         onChange={(e) => setTaskTitle(e.target.value)} // Updating taskTitle state onChange
                     />
                 </div>
                 <br />
-                <div style={{ display: 'flex'}}>
+                <div style={{ display: 'flex' }}>
                     <span>Select Priority<span className={StylesAddModalElementEdit.asterisk}>*</span></span>
                     <div className={StylesAddModalElementEdit.priorityOptions}>
                         <button
@@ -166,7 +168,15 @@ const AddModalElementEdit = ({ taskId }) => {
                 </div>
                 <div>
                     <br />
-                    <span>Checklist ({checklists.length}/{checklists.length})<span className={StylesAddModalElementEdit.asterisk}>*</span></span>
+                    <span>Checklist ({checklists.map((checklist) => {
+                        if (checklist.completed === true) {
+                            checkMarkMe = checkMarkMe + 1;
+                        }
+                    })
+                    }
+                        {checkMarkMe}
+                        /{checklists.length})<span className={StylesAddModalElementEdit.asterisk}>*</span></span>
+                    {console.log("checklists]]]]]]]]]]", checklists)}
                 </div>
                 <div className={StylesAddModalElementEdit.checklist}>
                     <ModalTaskListEdit

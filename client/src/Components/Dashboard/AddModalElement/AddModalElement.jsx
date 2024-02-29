@@ -2,7 +2,7 @@ import React, { useState, forwardRef } from 'react';
 import StylesAddModalElement from './AddModalElement.module.css';
 import ModalTaskList from '../ModalTaskList/ModalTaskList';
 import { useDispatch } from 'react-redux';
-import { closeModal1 , toggleLoader} from '../../../Redux/slice';
+import { closeModal1, toggleLoader } from '../../../Redux/slice';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -19,7 +19,7 @@ const AddModalElement = () => {
     const myBoard = 'toDo';
     const [checklists, setChecklists] = useState([]);
 
-    
+
     const handleCloseModal = () => {
         // dispatch(toggleLoader());
         dispatch(closeModal1());
@@ -45,22 +45,22 @@ const AddModalElement = () => {
         const dueDate = startDate ? startDate.toISOString().split('T')[0] : null; // Format date as "YYYY-MM-DD"
         const userId = uId;
         const board = myBoard;
-    
+
         // Filter out empty tasks from the checklist
         const nonEmptyChecklist = checklists.filter(item => item.inputValue.trim() !== '');
-    
+
         // Check if there are any non-empty tasks
         if (nonEmptyChecklist.length === 0) {
             console.log('No tasks to save.');
             toast.error('No tasks to save.');
             return; // Don't proceed if there are no tasks to save
         }
-    
+
         const checklist = nonEmptyChecklist.map(item => ({
             taskName: item.inputValue,
             completed: item.isChecked
         }));
-    
+
         const data = {
             title,
             priority,
@@ -69,15 +69,15 @@ const AddModalElement = () => {
             userId,
             board
         };
-    
+
         console.log(data);
-    const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         axios.post(`${baseUrl}/api/addtask`, data,
-        {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then(response => {
                 console.log('Task added successfully:', response.data);
                 toast.success(response.data.message);
@@ -88,7 +88,7 @@ const AddModalElement = () => {
                 toast.error(error);
             });
     };
-    
+
     const DateInput = forwardRef(({ value, onClick }, ref) => (
         <button
             className={StylesAddModalElement.button1}
@@ -99,6 +99,8 @@ const AddModalElement = () => {
         </button>
     ));
 
+    let checkMarkMe = 0;
+
     return (
         <>
             <div className={StylesAddModalElement.addModalElement}>
@@ -107,17 +109,25 @@ const AddModalElement = () => {
                     <input id="taskTitle" type='text' className={StylesAddModalElement.inputTitle} placeholder='Enter Task Title' />
                 </div>
                 <br />
-                <div style={{ display: 'flex'}}>
+                <div style={{ display: 'flex' }}>
                     <span>Select Priority<span className={StylesAddModalElement.asterisk}>*</span></span>
                     <div className={StylesAddModalElement.priorityOptions}>
                         <button value="HIGH PRIORITY" className={selectedPriority === "HIGH PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("HIGH PRIORITY")}><img src='Assets/high.svg' alt='addPriority' />&nbsp;&nbsp;HIGH PRIORITY</button>
-                        <button value="MODERATE PRIORITY" className={ selectedPriority === "MODERATE PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
-                        <button value="LOW PRIORITY" className={ selectedPriority === "LOW PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
+                        <button value="MODERATE PRIORITY" className={selectedPriority === "MODERATE PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("MODERATE PRIORITY")}><img src='Assets/moderate.svg' alt='addPriority' />&nbsp;&nbsp;MODERATE PRIORITY</button>
+                        <button value="LOW PRIORITY" className={selectedPriority === "LOW PRIORITY" ? StylesAddModalElement.addPriorityColor : StylesAddModalElement.addPriority} onClick={() => handlePriorityClick("LOW PRIORITY")}><img src='Assets/low.svg' alt='addPriority' />&nbsp;&nbsp;LOW PRIORITY</button>
                     </div>
                 </div>
                 <div>
                     <br />
-                    <span>Checklist (1/3)<span className={StylesAddModalElement.asterisk}>*</span></span>
+                    <span>Checklist ({checklists.map((checklist) => {
+                        if (checklist.isChecked === true) {
+                            checkMarkMe = checkMarkMe + 1;
+                        }
+                    })
+                    }
+                        {checkMarkMe}
+                        /{checklists.length})<span className={StylesAddModalElement.asterisk}>*</span></span>
+                    {console.log("checklists>>>>>>>>>>.", checklists)}
                 </div>
                 <div className={StylesAddModalElement.checklist}>
                     <ModalTaskList checklists={checklists} setChecklists={setChecklists} onTaskCheck={handleTaskCheck} onTaskDelete={handleTaskDelete} />
