@@ -25,6 +25,12 @@
     }
   }
 
+  @media screen and (min-width: 1440px) {
+    .inputTask {
+      width: 49vw; 
+      box-sizing: border-box;
+    }
+  }
 
 .inputTask::placeholder {
     font-family: Inter;
