@@ -6,7 +6,7 @@ const ModalTaskListEdit = ({ checklists, setChecklists, onTaskCheck, onTaskDelet
   const handleAddNewClick = () => {
     const newChecklistId = `checklist-${checklists.length}`;
     const newChecklist = {
-      id: newChecklistId,
+      _id: newChecklistId,
       taskName: '',
       completed: false,
     };
