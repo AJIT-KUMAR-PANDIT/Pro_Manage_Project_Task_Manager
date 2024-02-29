@@ -82,6 +82,7 @@ const AddModalElement = () => {
                 console.log('Task added successfully:', response.data);
                 toast.success(response.data.message);
                 handleCloseModal();
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error adding task:', error);

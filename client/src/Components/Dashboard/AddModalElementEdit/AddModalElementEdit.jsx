@@ -106,6 +106,7 @@ const AddModalElementEdit = ({ taskId }) => {
             .then(response => {
                 toast.success(response.data.message);
                 handleCloseModal();
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error updating task:', error);
