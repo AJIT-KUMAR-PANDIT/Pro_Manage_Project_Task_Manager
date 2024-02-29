@@ -3,7 +3,7 @@ import StylesTaskList from './TaskList.module.css';
 import { Url } from '../../../Utils/Url';
 import axios from 'axios';
 
-const TaskList = ({ taskName, completed, taskListId, checkListId }) => {
+const TaskList = ({ taskName, completed, taskListId, checkListId , myChecklistDisplay}) => {
 
   const baseUrl = Url();
   const [inputValue, setInputValue] = useState(taskName);
@@ -27,6 +27,8 @@ const TaskList = ({ taskName, completed, taskListId, checkListId }) => {
       });
 
       console.log(response.data.message);
+      console.log("completed00000000000000000000",newChecked);
+      myChecklistDisplay(newChecked);
     } catch (error) {
       console.error('Error updating checklist item:', error);
       if (error.response) {

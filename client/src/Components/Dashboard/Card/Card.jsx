@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import StylesCard from './Card.module.css';
 import TaskList from '../TaskList/TaskList';
 import { Url } from '../../../Utils/Url';
 import { useDispatch } from 'react-redux';
-import { toggleBoardSwitch,toggleToastyAction, toggleLoader, openModal2, setTaskId } from '../../../Redux/slice';
+import { toggleBoardSwitch, toggleToastyAction, toggleLoader, openModal2, setTaskId } from '../../../Redux/slice';
 import Modal from 'react-responsive-modal';
 
 const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasped }) => {
@@ -38,11 +38,11 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         try {
             const taskId = myTaskId;
             const response = await axios.post(`${baseUrl}/api/updateboard`, { taskId, newBoard },
-            {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
 
             setChangeBoard(response.data.task.board);
             dispatch(toggleLoader());
@@ -162,20 +162,23 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         return totalChecks;
     };
 
-    var checksMarked = 0;
+    const initialChecksMarked = checklist.reduce((total, taskList) => {
+        if (taskList.completed) {
+            return total + 1;
+        }
+        return total;
+    }, 0);
 
-    const funTotalChecksMarked = (checklist) => {
-        checklist.map((taskList, key) => {
-            if (taskList.completed) {
-                checksMarked++;
-            }
-        });
-        return checksMarked;
+    const [checksMarked, setchecksMarked] = useState(initialChecksMarked);
+
+    const funTotalChecksMarked = (checklistCompleted) => {
+        if (checklistCompleted) {
+            setchecksMarked(prevCount => prevCount + 1);
+        } else {
+            setchecksMarked(prevCount => prevCount - 1);
+        }
     };
 
-    useEffect(() => {
-        funTotalChecksMarked(checklist);
-    }, [], [myTaskId, checklist]);
 
     const [showOverlay, setShowOverlay] = useState(false);
 
@@ -188,12 +191,12 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         dispatch(toggleLoader());
         try {
             const response = await axios.delete(`${baseUrl}/api/deletetask/${taskId}`,
-            {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
             window.location.reload();
             dispatch(toggleLoader());
             return response.data;
@@ -201,7 +204,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
             throw new Error(error.response.data.error || 'Error deleting task');
             dispatch(toggleLoader());
         }
-    }; 
+    };
 
     const [shareableLink, setShareableLink] = useState('');
     const [copied, setCopied] = useState(false);
@@ -212,7 +215,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         try {
             const response = await axios.get(`${baseUrl}/api/sharelink/${taskId}`);
             setShareableLink(response.data.shareableLink);
-            
+
             navigator.clipboard.writeText(response.data.shareableLink);
             dispatch(toggleLoader());
             setCopied(true);
@@ -223,7 +226,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
             setTimeout(() => {
                 setCopied(false);
                 dispatch(toggleToastyAction());
-            }, 1000); 
+            }, 1000);
         } catch (error) {
             console.error('Error generating shareable link:', error);
             dispatch(toggleLoader());
@@ -237,10 +240,10 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
         setShowOverlay(!showOverlay);
         dispatch(setTaskId(taskId));
     }
-    
+
     return (
         <>
-        {console.log("myTaskId========", myTaskId)}
+            {console.log("myTaskId========", myTaskId)}
             {img(priority)}
             {console.log("collasped========", collasped)}
             <div className={StylesCard.card}>
@@ -263,7 +266,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                 <div className={StylesCard.cardTitle}>{title}</div>
                 <div className={StylesCard.checklist}>
                     Checklist ({
-                        funTotalChecksMarked(checklist)
+                        checksMarked
                     }/{
                         funTotalChecks(checklist)
                     })
@@ -275,7 +278,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                     <div>
                         <br />
                         {checklist.map((taskList, index) => (
-                            <TaskList key={index} taskName={taskList.taskName} completed={taskList.completed} taskListId={myTaskId} checkListId={taskList._id} />
+                            <TaskList key={index} taskName={taskList.taskName} completed={taskList.completed} taskListId={myTaskId} checkListId={taskList._id} myChecklistDisplay={funTotalChecksMarked} />
                         ))}
                     </div>
                 )}
@@ -285,8 +288,8 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                     {
                         newDueDate ?
                             <div className={dueDatePassed && changeBoard !== "done" ? StylesCard.butFooterDatePassed : changeBoard === "done" ? StylesCard.butFooterDateGreen : StylesCard.butFooterDate}>{newDueDate}</div>
-                             : null
-                    } 
+                            : null
+                    }
 
                     <div className={StylesCard.cardFooter} style={{ position: 'relative', right: '-21px', display: 'flex', gap: '1px' }}>
                         {handleChange(changeBoard)}
@@ -297,7 +300,7 @@ const Card = ({ priority, title, checklist, myTaskId, serverFetchedDate, collasp
                 <div className={StylesCard.overlay} onClick={toggleOverlay}></div>
             )}
 
-           
+
         </>
     );
 };
