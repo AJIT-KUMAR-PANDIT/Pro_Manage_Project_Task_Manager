@@ -3,7 +3,7 @@
 
 
 This is the final evaluation project by cuvette
-![Logo](./client/public/Assets/logo.svg)
+![Logo](./ReadMeAssets/logo.png)
 
 
 ## Authors
