@@ -1,4 +1,4 @@
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useTimer } from 'react-timer-hook';
 
 const ProtectedRoutes = ({ children }) => {
@@ -13,7 +13,7 @@ const ProtectedRoutes = ({ children }) => {
       localStorage.removeItem('token');
       localStorage.removeItem('id');
       localStorage.removeItem('name');
-      <Navigate to="/" replace />
+      window.location.reload();
     }
   });
 

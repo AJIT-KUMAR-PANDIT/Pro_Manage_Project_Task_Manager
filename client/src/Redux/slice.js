@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Initial state for modal1
+
 const initialModalState = {
-  isOpen: false, // Assuming initial state for modal is open
+  isOpen: false, 
 };
 
 const initialModal2State = {
-  isOpen: false, // Assuming initial state for modal is open
+  isOpen: false, 
 };
 
 
-// Initial state for modal2
+
 const initialBoardSwitch = {
-  isBoardSwitch: false, // Assuming initial state for modal2 is closed
+  isBoardSwitch: false, 
 };
 
 const initialtoasty={
@@ -42,7 +42,7 @@ export const { closeModal: closeModal1, openModal: openModal1 } = modalSlice.act
 
 export const modalReducer = modalSlice.reducer;
 
-// Slice for modal1
+// Slice for modal2
 export const modal2Slice = createSlice({
   name: 'modal2',
   initialState: initialModal2State,
