@@ -42,7 +42,7 @@ const AddModalElement = () => {
     const handleSave = () => {
         const title = document.getElementById('taskTitle').value;
         const priority = selectedPriority;
-        const dueDate = startDate ? startDate.toISOString().split('T')[0] : null; // Format date as "YYYY-MM-DD"
+        const dueDate = startDate ? startDate : null; 
         const userId = uId;
         const board = myBoard;
 
